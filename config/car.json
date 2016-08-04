@@ -1,0 +1,30 @@
+{
+  "volume": {
+    "notification": 5,
+    "media": 15,
+    "dnd": "all"
+  },
+  "wifiOn": false,
+  "bluetoothOn": null,
+  "screenRotationOn": true,
+  "enter": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": [{
+      "name": "CarMode",
+      "priority": 10,
+      "param1": "enter",
+      "param2": ""
+    }]
+  },
+  "exit": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": [{
+      "name": "CarMode",
+      "priority": 10,
+      "param1": "exit",
+      "param2": ""
+    }]
+  }
+}

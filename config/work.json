@@ -1,0 +1,20 @@
+{
+  "volume": {
+    "notification": 0,
+    "media": 0,
+    "dnd": "all"
+  },
+  "wifiOn": null,
+  "bluetoothOn": null,
+  "screenRotationOn": false,
+  "enter": {
+    "profilesToDisable": [],
+    "profilesToEnable": ["Work App Hider"],
+    "tasksToRun": []
+  },
+  "exit": {
+    "profilesToDisable": ["Work App Hider"],
+    "profilesToEnable": [],
+    "tasksToRun": []
+  }
+}

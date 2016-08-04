@@ -1,0 +1,30 @@
+{
+  "volume": {
+    "notification": 1,
+    "media": 2,
+    "dnd": "all"
+  },
+  "wifiOn": null,
+  "bluetoothOn": null,
+  "screenRotationOn": false,
+  "enter": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": [{
+      "name": "BikingScreenLock",
+      "priority": 10,
+      "param1": "",
+      "param2": ""
+    }]
+  },
+  "exit": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": [{
+      "name": "BikingScreenLock",
+      "priority": 10,
+      "param1": "destroy",
+      "param2": ""
+    }]
+  }
+}

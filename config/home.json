@@ -1,0 +1,25 @@
+{
+  "volume": {
+    "notification": 3,
+    "media": 7,
+    "dnd": "all"
+  },
+  "wifiOn": null,
+  "bluetoothOn": null,
+  "screenRotationOn": false,
+  "enter": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": [{
+      "name": "LampOnAtNight",
+      "priority": 10,
+      "param1": "",
+      "param2": ""
+    }]
+  },
+  "exit": {
+    "profilesToDisable": [],
+    "profilesToEnable": [],
+    "tasksToRun": []
+  }
+}
