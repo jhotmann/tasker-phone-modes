@@ -1,0 +1,3 @@
+# tasker-phone-modes
+Easy to configure phone mode profiles for Tasker
+More info to come...
