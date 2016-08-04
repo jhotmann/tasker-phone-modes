@@ -11,30 +11,33 @@ profiles and quickly get automating.
 My modes project consists of a couple profiles, a few helper tasks, some javascript that does most of the work, and
 configuration files that you create and customize to your needs.
 
-## Profiles
-** PhoneModeChanged ** - monitors the %PHONEMODE variable for changes. When %PHONEMODE is set (i.e. to 'home') the
+### Profiles
+**PhoneModeChanged** - monitors the %PHONEMODE variable for changes. When %PHONEMODE is set (i.e. to 'home') the
 javascript reads the home.config file and modifies your settings accordingly, enables/disables any profiles specified,
 and then executes any tasks specified in the config. As an added bonus your config can enable/disable profiles and queue
 tasks when your phone leaves a mode as well.
 
-** DoubleCheck ** - a profile that waits for you to unlock your phone and will ensure that your settings are set correctly
+**DoubleCheck** - a profile that waits for you to unlock your phone and will ensure that your settings are set correctly
 because of occasional issues with Tasker and doze mode.
 
-## Tasks
-** DoNoDisturb ** - a helper task for setting DND mode (can't be done via javascript).
-** DisplayRotate ** - a helper task to turn on/off display rotation (can't be done via javascript).
+
+### Tasks
+**DoNoDisturb** - a helper task for setting DND mode (can't be done via javascript).
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via javascript).
 
 # Installation
 Coming soon
 
 # Configuration
-## Import Modes.prj.xml into Tasker (Not available yet)
+### Import Modes.prj.xml into Tasker (Not available yet)
 Download and import instructions will go here
 
-## Run Setup task
+
+### Run Setup task
 Coming soon
 
-## Customize config files
+
+### Customize config files
 The base.config file should be used as a template for new config files. I have also included several of my config files as
 examples that you can modify to your needs.  COMING SOON: a task to create config files without the need of a computer or
 text editor.
@@ -103,7 +106,7 @@ home.config
 When a property is left null (or an empty array: []) that property is left unchanged. Things like null, true, false, and integers
 should never have quotes around them. Strings should always use double quotes. Proper indenting is nice but optional.
 
-## Changing phone modes
+### Changing phone modes
 The name of the config files are important because when you want to use a configuration all you have to do is change %PHONEMODE
 to that config's name. When %PHONEMODE = home, home.config is used. You can change modes manually within a task or with a profile. I personally
 only use profiles to change modes.
