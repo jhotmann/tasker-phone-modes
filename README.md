@@ -128,5 +128,13 @@ How modes are changed is entirely dependent on your personal setup, so you are f
 location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app because you don't have
 bluetooth in the car, go for it.
 
+Here are my profiles as an example (a forward slash '/' is used as an 'or')
+
+![My profiles screenshot](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/ReadmeFiles/MyModes.png "My profiles")
+
+And "Other mode" that's only active when all other modes are inactive
+
+![Other mode screenshot](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/ReadmeFiles/OtherMode.png "Other Mode")
+
 # TODO
 - Add ability to check for javascript updates on a daily basis
