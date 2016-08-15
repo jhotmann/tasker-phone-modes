@@ -44,7 +44,9 @@ Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJa
 
 ### Customize config files
 The base.config file should be used as a template for new config files. I have also included several of my config files as
-examples that you can modify to your needs.  I would recommend using a comptuer for this.
+examples that you can modify to your needs.  I would recommend using a comptuer for this. Once you are satisfied with your
+configuration, copy your config files to /sdcard/Tasker/ModeConfigs (Which is the default, you can also specify a different location during the setup)
+and begin playing around with your different modes.
 
 base.config
 ```json
