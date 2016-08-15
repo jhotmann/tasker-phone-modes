@@ -29,7 +29,8 @@ because of occasional issues with Tasker and doze mode.
 
 # Installation and Configuration
 ### Import Modes.prj.xml into Tasker (Not available yet)
-Download and import instructions will go here
+Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
+Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
 
 
 ### Run Setup task
