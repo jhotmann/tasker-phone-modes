@@ -13,7 +13,7 @@ configuration files that you create and customize to your needs.
 
 ### Profiles
 **PhoneModeChanged** - monitors the %PHONEMODE variable for changes. When %PHONEMODE is set (i.e. to 'home') the
-javascript reads the home.config file and modifies your settings accordingly, enables/disables any profiles specified,
+javascript reads the mathcing config file (i.e. home.config) and modifies your settings accordingly, enables/disables any profiles specified,
 and then executes any tasks specified in the config. As an added bonus your config can enable/disable profiles and queue
 tasks when your phone leaves a mode as well.
 
@@ -23,9 +23,13 @@ because of occasional issues with Tasker and doze mode.
 
 ### Tasks
 **Setup** - guides the user through setting up some variables and downloads the javasript files
+
 **DoNoDisturb** - a helper task for setting DND mode (can't be done via javascript)
+
 **DisplayRotate** - a helper task to turn on/off display rotation (can't be done via javascript)
+
 **UpdateJavascript** - downloads the latest javascript files from GitHub
+
 
 # Installation and Configuration
 ### Import Modes.prj.xml into Tasker (Not available yet)
