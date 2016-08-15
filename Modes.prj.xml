@@ -1,0 +1,237 @@
+<TaskerData sr="" dvi="1" tv="4.8u5m">
+	<Profile sr="prof51" ve="2">
+		<cdate>1450117063841</cdate>
+		<clp>true</clp>
+		<edate>1471287034749</edate>
+		<id>51</id>
+		<limit>true</limit>
+		<mid0>52</mid0>
+		<nme>DoubleCheck</nme>
+		<Event sr="con0" ve="2">
+			<code>1000</code>
+		</Event>
+	</Profile>
+	<Profile sr="prof55" ve="2">
+		<cdate>1450118346463</cdate>
+		<clp>true</clp>
+		<edate>1471287039725</edate>
+		<id>55</id>
+		<mid0>56</mid0>
+		<nme>PhoneModeChanged</nme>
+		<Event sr="con0" ve="2">
+			<code>3050</code>
+			<pri>0</pri>
+			<Str sr="arg0" ve="3">%PHONEMODE</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="0"/>
+		</Event>
+	</Profile>
+	<Project sr="proj0" ve="2">
+		<cdate>1469483841722</cdate>
+		<name>Modes</name>
+		<pids>51,55</pids>
+		<tids>13,56,20,12,52,9</tids>
+	</Project>
+	<Task sr="task12">
+		<cdate>1469484099717</cdate>
+		<edate>1471287217536</edate>
+		<id>12</id>
+		<nme>UpdateJavascript</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>118</code>
+			<Str sr="arg0" ve="3">https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/js/SetPhoneMode.js</Str>
+			<Str sr="arg1" ve="3"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="10"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">Tasker/js/SetPhoneMode.js</Str>
+			<Int sr="arg8" val="0"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>118</code>
+			<Str sr="arg0" ve="3">https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/js/DoubleCheck.js</Str>
+			<Str sr="arg1" ve="3"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="10"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">Tasker/js/DoubleCheck.js</Str>
+			<Int sr="arg8" val="0"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>118</code>
+			<Str sr="arg0" ve="3">https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/config/base.json</Str>
+			<Str sr="arg1" ve="3"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="10"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">%MODECONFIGPATH/base.json</Str>
+			<Int sr="arg8" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task13">
+		<cdate>1469555817040</cdate>
+		<edate>1470335743229</edate>
+		<id>13</id>
+		<nme>DisplayRotate</nme>
+		<Action sr="act0" ve="7">
+			<code>596</code>
+			<Str sr="arg0" ve="3">%par1</Str>
+			<Int sr="arg1" val="28"/>
+			<Str sr="arg2" ve="3">%rotate</Str>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>822</code>
+			<Int sr="arg0" val="1"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%rotate</lhs>
+					<op>2</op>
+					<rhs>true</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%par1</lhs>
+					<op>13</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>822</code>
+			<Int sr="arg0" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%rotate</lhs>
+					<op>2</op>
+					<rhs>false</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+	</Task>
+	<Task sr="task20">
+		<cdate>1471285453782</cdate>
+		<edate>1471287510543</edate>
+		<id>20</id>
+		<nme>Setup</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>129</code>
+			<Str sr="arg0" ve="3">var configPath = global('MODECONFIGPATH');  var path = prompt('What folder will contain your config files? (No trailing slash)', (configPath ? configPath : '/sdcard/Tasker/ModeConfigs')); if (path != null) {   setGlobal('MODECONFIGPATH', path); }  performTask('UpdateJavascript', 10);</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+	</Task>
+	<Task sr="task52">
+		<cdate>1450117067859</cdate>
+		<edate>1471287034749</edate>
+		<id>52</id>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>131</code>
+			<Str sr="arg0" ve="3">Tasker/js/DoubleCheck.js</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>159</code>
+			<Str sr="arg0" ve="3">DoubleCheck</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task56">
+		<cdate>1450118349286</cdate>
+		<edate>1471287039725</edate>
+		<id>56</id>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>131</code>
+			<Str sr="arg0" ve="3">Tasker/js/SetPhoneMode.js</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>159</code>
+			<Str sr="arg0" ve="3">DoubleCheck</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+	</Task>
+	<Task sr="task9">
+		<cdate>1469465053041</cdate>
+		<edate>1471287516837</edate>
+		<id>9</id>
+		<nme>DoNotDisturb</nme>
+		<Action sr="act0" ve="7">
+			<code>596</code>
+			<Str sr="arg0" ve="3">%par1</Str>
+			<Int sr="arg1" val="28"/>
+			<Str sr="arg2" ve="3">%mode</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>312</code>
+			<Int sr="arg0" val="2"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%mode</lhs>
+					<op>2</op>
+					<rhs>all</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%par1</lhs>
+					<op>13</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>312</code>
+			<Int sr="arg0" val="1"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%mode</lhs>
+					<op>2</op>
+					<rhs>priority</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>312</code>
+			<Int sr="arg0" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%mode</lhs>
+					<op>2</op>
+					<rhs>alarms</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>312</code>
+			<Int sr="arg0" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%mode</lhs>
+					<op>2</op>
+					<rhs>none</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+	</Task>
+</TaskerData>

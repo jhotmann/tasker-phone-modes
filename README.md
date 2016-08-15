@@ -22,25 +22,24 @@ because of occasional issues with Tasker and doze mode.
 
 
 ### Tasks
-**DoNoDisturb** - a helper task for setting DND mode (can't be done via javascript).
-**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via javascript).
+**Setup** - guides the user through setting up some variables and downloads the javasript files
+**DoNoDisturb** - a helper task for setting DND mode (can't be done via javascript)
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via javascript)
+**UpdateJavascript** - downloads the latest javascript files from GitHub
 
-# Installation
-Coming soon
-
-# Configuration
+# Installation and Configuration
 ### Import Modes.prj.xml into Tasker (Not available yet)
 Download and import instructions will go here
 
 
 ### Run Setup task
-Coming soon
+Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on screen prompts.
+Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
 
 
 ### Customize config files
 The base.config file should be used as a template for new config files. I have also included several of my config files as
-examples that you can modify to your needs.  COMING SOON: a task to create config files without the need of a computer or
-text editor.
+examples that you can modify to your needs.  I would recommend using a comptuer for this.
 
 base.config
 ```json
@@ -129,7 +128,4 @@ location instead of WifiConnected, you are free to do so. If you want car mode t
 bluetooth in the car, go for it.
 
 # TODO
-- Create setup task
-- Add ability to check for javascript updates
-- Finalize Modes.prj.xml
-- Finish all README steps
+- Add ability to check for javascript updates on a daily basis
