@@ -3,7 +3,7 @@ Things like silencing your phone while in a meeting, turning down brightness at 
 when in the car are just the tip of the iceburg when it comes to Tasker automation. This sort of automation can
 be approached in many different ways and often times leads to repeated steps in multiple tasks and disorganization.
 
-Over time I have strived to refine my location-based-automation so that it's easy to modify, highly organized, and
+Over time I have strived to refine my location-based automation so that it's easy to modify, highly organized, and
 doesn't use the same steps in multiple tasks. I have now also made it universal so that anyone can import my simple
 profiles and quickly get automating.
 
@@ -32,7 +32,7 @@ because of occasional issues with Tasker and doze mode.
 
 
 # Installation and Configuration
-### Import Modes.prj.xml into Tasker (Not available yet)
+### Import Modes.prj.xml into Tasker
 Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
 Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
 
@@ -45,7 +45,7 @@ Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJa
 ### Customize config files
 The base.config file should be used as a template for new config files. I have also included several of my config files as
 examples that you can modify to your needs.  I would recommend using a comptuer for this. Once you are satisfied with your
-configuration, copy your config files to /sdcard/Tasker/ModeConfigs (Which is the default, you can also specify a different location during the setup)
+configuration, copy your config files to **/sdcard/Tasker/ModeConfigs** (Which is the default, you can also specify a different location during the setup)
 and begin playing around with your different modes.
 
 base.config
