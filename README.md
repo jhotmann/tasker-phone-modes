@@ -38,13 +38,13 @@ Then open up Tasker, long press on a project tab at the bottom, and select Impor
 
 
 ### Run Setup task
-Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on screen prompts.
+Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts.
 Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
 
 
 ### Customize config files
 The base.config file should be used as a template for new config files. I have also included several of my config files as
-examples that you can modify to your needs.  I would recommend using a comptuer for this. Once you are satisfied with your
+examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
 configuration, copy your config files to **/sdcard/Tasker/ModeConfigs** (Which is the default, you can also specify a different location during the setup)
 and begin playing around with your different modes.
 
