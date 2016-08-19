@@ -1,6 +1,6 @@
 One of frequent uses of Tasker is to change system settings and perform tasks based on your current situation.
 Things like silencing your phone while in a meeting, turning down brightness at night, or launching a music app
-when in the car are just the tip of the iceburg when it comes to Tasker automation. This sort of automation can
+when in the car are just the tip of the iceberg when it comes to Tasker automation. This sort of automation can
 be approached in many different ways and often times leads to repeated steps in multiple tasks and disorganization.
 
 Over time I have strived to refine my location-based automation so that it's easy to modify, highly organized, and
@@ -8,12 +8,12 @@ doesn't use the same steps in multiple tasks. I have now also made it universal 
 profiles and quickly get automating.
 
 # Overview
-My modes project consists of a couple profiles, a few helper tasks, some javascript that does most of the work, and
+My modes project consists of a couple profiles, a few helper tasks, some JavaScript that does most of the work, and
 configuration files that you create and customize to your needs.
 
 ### Profiles
 **PhoneModeChanged** - monitors the %PHONEMODE variable for changes. When %PHONEMODE is set (i.e. to 'home') the
-javascript reads the mathcing config file (i.e. home.config) and modifies your settings accordingly, enables/disables any profiles specified,
+JavaScript reads the matching config file (i.e. home.config) and modifies your settings accordingly, enables/disables any profiles specified,
 and then executes any tasks specified in the config. As an added bonus your config can enable/disable profiles and queue
 tasks when your phone leaves a mode as well.
 
@@ -24,11 +24,11 @@ because of occasional issues with Tasker and doze mode.
 ### Tasks
 **Setup** - guides the user through setting up some variables and downloads the javasript files
 
-**DoNoDisturb** - a helper task for setting DND mode (can't be done via javascript)
+**DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript)
 
-**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via javascript)
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
 
-**UpdateJavascript** - downloads the latest javascript files from GitHub
+**UpdateJavascript** - downloads the latest JavaScript files from GitHub
 
 
 # Installation and Configuration
@@ -143,4 +143,4 @@ And "Other mode" that's only active when all other modes are inactive
 ![Other mode screenshot](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/ReadmeFiles/OtherMode.png "Other Mode")
 
 # TODO
-- Add ability to check for javascript updates on a daily basis
+- Add ability to check for JavaScript updates on a daily basis
