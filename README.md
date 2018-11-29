@@ -338,3 +338,7 @@ In version `0.0.1` there was just a single mode active at one time and the `%PHO
 1. Add an Exit Task or another step in a task to remove the context when necessary.
 
     Add a step with a `Perform Task` action that calls the `RemoveFromContext` task with `Parameter 1` set to the name of the context.
+
+1. Update your configuration files with `type` and `priority` properties.
+
+    Your existing configuration files will still work and will behave the exact same as they did in version `0.0.1` because they will all be primary contexts (only one active at a time) with the same priority (default of 50), and so the last context added to the `%Modes_Contexts` variable will be the active context. However you may wish to take advantage of the ability to use secondary contexts as well as priorities to make managing which context(s) are active easier.
