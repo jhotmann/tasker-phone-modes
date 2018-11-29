@@ -12,7 +12,7 @@ This framework monitors a variable `%Modes_Contexts` which contains a list of yo
 
 To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter. The `ContextChanged` profile will pickup the change and read the configurations for all active contexts. Configuration file names should match the context names in Tasker i.e. if you have a context named `home`, the framework will look for a configuration file named `home.json` for its configuration.
 
-If multiple contexts are active, the framework does a few things to determine what the device settings should be set to. Only the highest priority `primary` (see the configuration spec for a description of `primary` and `secondary` contexts) context will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts that are active will be used, but settings from higher priority contexts will take precidence over lower priority contexts. Also, `secondary` context's settings will take precidence over `primary` context's settings.
+If multiple contexts are active, the framework does a few things to determine what the device settings should be set to. Only the highest priority `primary` (see the configuration spec for a description of `primary` and `secondary` contexts) context will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts. Also, `secondary` context's settings will take precidence over `primary` context's settings.
 
 See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
@@ -110,17 +110,20 @@ The following tasks are included in the framework:
 
 ```json
 {
-  "volume": {
-    "notification": "null or integer (0-7)",
-    "media": "null or integer (0-15)",
-    "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)"
-  },
+  "type": "null or integer (1 for primary or 2 for secondary)",
+  "priority": "null or integer (0-100)",
+  "volume_notification": "null or integer (0-7)",
+  "volumn_media": "null or integer (0-15)",
+  "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)",
+  "location": "null, off (to turn off location), accuracy (for High Accuracy), battery (for Battery Saver), or device (for Device Only)",
   "wifiOn": "null or boolean",
   "bluetoothOn": "null or boolean",
+  "airplaneModeOn": "null or boolean",
   "screenRotationOn": "null or boolean",
+  "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
-    "profilesToEnable": [],
+    "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],
     "tasksToRun": [{
       "name": "TaskName1",
       "priority": 10,
@@ -142,7 +145,7 @@ The following tasks are included in the framework:
 ```
 
 When a property is omitted, left null, or is an empty array `[]`, that setting is left unchanged. Things like `null`, `true`, `false`, and integers (`1`, `2`, `42`)
-should never have quotes around them. Strings should always use double quotes. Proper indenting is nice but optional.
+should never have quotes around them. `"Strings"` should always use double quotes. Proper indenting is nice but optional.
 
 # Changing Contexts
 The name of the config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/disactivate contexts within a task or with a profile. I personally only use profiles to handle context changes.
