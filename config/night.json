@@ -1,0 +1,29 @@
+{
+  "type": 2,
+  "priority": 50,
+  "volume_notification": 1,
+  "volume_media": 0,
+  "dnd": "priority",
+  "enter": {
+    "tasksToRun": [{
+      "name": "NightMode",
+      "priority": 10,
+      "param1": "",
+      "param2": ""
+    }]
+  },
+  "exit": {
+    "profilesToEnable": ["ExitNightMode"],
+    "tasksToRun": [{
+      "name": "TouchVibrations",
+      "priority": 10,
+      "param1": "on",
+      "param2": ""
+    }, {
+      "name": "AutoBrightnessPercent",
+      "priority": 10,
+      "param1": "45",
+      "param2": ""
+    }]
+  }
+}

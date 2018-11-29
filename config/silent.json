@@ -1,20 +1,7 @@
 {
-  "volume": {
-    "notification": 0,
-    "media": 0,
-    "dnd": "none" 
-  },
-  "wifiOn": null,
-  "bluetoothOn": null,  
-  "screenRotationOn": null, 
-  "enter": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
-    "tasksToRun": []
-  },
-  "exit": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
-    "tasksToRun": []
-  }
+  "type": 2,
+  "priority": 95,
+  "volume_notification": 0,
+  "volume_media": 0,
+  "dnd": "none"
 }

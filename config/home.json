@@ -1,25 +1,11 @@
 {
-  "volume": {
-    "notification": 3,
-    "media": 7,
-    "dnd": "all"
-  },
-  "wifiOn": null,
-  "bluetoothOn": null,
+  "type": 1,
+  "priority": 10,
+  "volume_notification": 3,
+  "volume_media": 7,
+  "dnd": "all",
+  "wifiOn": true,
+  "bluetoothOn": true,
   "screenRotationOn": false,
-  "enter": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
-    "tasksToRun": [{
-      "name": "LampOnAtNight",
-      "priority": 10,
-      "param1": "",
-      "param2": ""
-    }]
-  },
-  "exit": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
-    "tasksToRun": []
-  }
+  "displayTimeout": 1
 }

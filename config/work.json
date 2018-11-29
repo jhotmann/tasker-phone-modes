@@ -1,20 +1,16 @@
 {
-  "volume": {
-    "notification": 0,
-    "media": 0,
-    "dnd": "all"
-  },
-  "wifiOn": null,
-  "bluetoothOn": null,
+  "type": 1,
+  "priority": 11,
+  "volume_notification": 0,
+  "volume_media": 0,
+  "dnd": "all",
+  "wifiOn": true,
   "screenRotationOn": false,
+  "displayTimeout": 1,
   "enter": {
-    "profilesToDisable": [],
-    "profilesToEnable": ["Work App Hider"],
-    "tasksToRun": []
+    "profilesToEnable": ["Work App Hider"]
   },
   "exit": {
-    "profilesToDisable": ["Work App Hider"],
-    "profilesToEnable": [],
-    "tasksToRun": []
+    "profilesToDisable": ["Work App Hider"]
   }
 }

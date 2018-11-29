@@ -1,54 +1,113 @@
-One of frequent uses of Tasker is to change system settings and perform tasks based on your current situation.
+One of the frequent uses of Tasker is to change system settings and perform tasks based on your current situation.
 Things like silencing your phone while in a meeting, turning down brightness at night, or launching a music app
 when in the car are just the tip of the iceberg when it comes to Tasker automation. This sort of automation can
 be approached in many different ways and often times leads to repeated steps in multiple tasks and disorganization.
 
-Over time I have strived to refine my location-based automation so that it's easy to modify, highly organized, and
+Over time I have strived to refine my situation-based automation so that it's easy to modify, highly organized, and
 doesn't use the same steps in multiple tasks. I have now also made it universal so that anyone can import my simple
 profiles and quickly get automating.
 
 # Overview
-My modes project consists of a couple profiles, a few helper tasks, some JavaScript that does most of the work, and
-configuration files that you create and customize to your needs.
+This framework monitors a variable `%Modes_Contexts` which contains a list of your current, active contexts i.e. if you are home, if you have headphones plugged in, if you are in a work meeting, etc. These contexts are up to you to think of and manage based on your needs. The framework looks at the configuration for these contexts and based on priorities and context types will determine what your current settings should be and sets them accordingly. Also when a context becomes active or inactive you can easily run other tasks or enable/disable other profiles accordingly.
 
-### Profiles
-**PhoneModeChanged** - monitors the %PHONEMODE variable for changes. When %PHONEMODE is set (i.e. to 'home') the
-JavaScript reads the matching config file (i.e. home.config) and modifies your settings accordingly, enables/disables any profiles specified,
-and then executes any tasks specified in the config. As an added bonus your config can enable/disable profiles and queue
-tasks when your phone leaves a mode as well.
+To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter. The `ContextChanged` profile will pickup the change and read the configurations for all active contexts. Configuration file names should match the context names in Tasker i.e. if you have a context named `home`, the framework will look for a configuration file named `home.json` for its configuration.
 
-**DoubleCheck** - a profile that waits for you to unlock your phone and will ensure that your settings are set correctly
-because of occasional issues with Tasker and doze mode.
+If multiple contexts are active, the framework does a few things to determine what the device settings should be set to. Only the highest priority `primary` (see the configuration spec for a description of `primary` and `secondary` contexts) context will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts that are active will be used, but settings from higher priority contexts will take precidence over lower priority contexts. Also, `secondary` context's settings will take precidence over `primary` context's settings.
 
+See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
-### Tasks
-**Setup** - guides the user through setting up some variables and downloads the javasript files
+# Configuration Spec
+The configuration files contain a single JSON object with the following properties. All properties are optional and a few have default values if they are not specified. If you omit a property that doesn't have a default value from your configuration, that setting will remain unchanged.
+
+* `type` - whether the context is a primary or secondary type
+  * `1` - a primary context (default). Think of a primary context as a place like home, work, car, etc. Primary contexts often contain multiple settings changes and possibly running other tasks or enabling/disabling other profiles.
+  * `2` - a secondary context. Think of a secondary context as a state that takes place within another context or can span multiple primary contexts like headphones plugged in, specific apps being open, or night time. Secondary contexts often change just a few settings like going into do not disturb mode when in a meeting.
+* `priority` - to determine what context(s) take priority when multiple are active
+  * An integer from `0` to `100`
+  * The default is `50`
+* `volume_notification` - set the notification volume
+  * An integer from `0` to `7`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_media` - set the media volume
+  * An integer from `0` to `15`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `dnd` - set the Do Not Disturb mode
+  * `"all"` - Do Not Disturb off
+  * `"priority"` - Priority-only
+  * `"alarms"` - Alarms-only
+  * `"none"` - Total silence
+* `location` - change the location mode
+  * `"off"` - location services off
+  * `"accuracy"` - high accuracy mode (uses GPS, Wifi, Bluetooth, and mobile networks)
+  * `"battery"` - battery saver mode (uses Wifi, Bluetooth, and mobile networks)
+  * `"device"` - device-only mode (uses GPS and other device sensors only)
+* `wifiOn` - turn Wifi on or off
+  * `true` - turns Wifi on
+  * `false` - turns Wifi off
+* `bluetoothOn` - turn Bluetooth on or off
+  * `true` - turns Bluetooth on
+  * `false` - turns Bluetooth off
+* `airplaneModeOn` - turns airplane mode on or off
+  * `true` - turns airplane mode on
+  * `false` - turns airplane mode off
+* `screenRotationOn` - turns display rotation on or off
+  * `true` - turns display rotation on
+  * `false` - turns display rotation off
+* `displayTimeout` - set the display timeout in minutes
+  * An integer from `1` to ???
+  * I'm not sure what the maximum timeout is
+* `enter` - profiles to enable/disable and tasks to run when the context is activated
+  * An object containing any of the following properties
+    * `profilesToDisable` - an array of profile names to disable: `["ProfileName1", "ProfileName2"]`
+    * `profilesToEnable` - an array of profile names to enable: `["ProfileName3", "ProfileName4"]`
+    * `tasksToRun` - an array of objects containing tasks to run and their parameters
+      * `name` - the name of the task (string), example: `"TaskName1"`
+      * `priority` - the task priority (integer), example" `10`
+      * `param1` - the first parameter to pass to the task (string), examples: `""` or `"SomeValue"`
+      * `param2` - the second parameter to pass to the task (string)
+* `exit` - profiles to enable/disable and tasks to run when the context is removed
+  * An object containing the same properties as `enter`
+
+# Profiles
+The framework just uses a single profile to handle context changes:
+
+**ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
+
+# Tasks
+The following tasks are included in the framework:
+
+**Setup** - guides the user through setting up some variables that will be used by the framework
+
+**AddToContext** - a task you call when a context becomes active with the context name as the first parameter
+
+**RemoveFromContext** - a task you call when a context is no longer active with the context name as the first parameter
+
+**ContextChanged** - contains JavaScript that reads the configuration files for all active contexts (i.e. home.json) and modifies your phone settings accordingly, enables/disables any profiles specified, and executes any tasks specified in the config. Additionally, any contexts that have become inactive will have any exit tasks executed and enables/disables specified profiles.
 
 **DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript)
 
-**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
+**LocationMode** - a helper task for setting the location mode (can't be done via JavaScript)
 
-**UpdateJavascript** - downloads the latest JavaScript files from GitHub
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
 
 
 # Installation and Configuration
-### Import Modes.prj.xml into Tasker
-Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
-Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
+1. ### Import Modes.prj.xml into Tasker
+    Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
+    Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
 
+1. ### Run Setup task
+    Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts.
+    Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
 
-### Run Setup task
-Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts.
-Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
+1. ### Customize config files
+    The base.json file should be used as a template for new config files. I have also included several of my config files as
+    examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
+    configuration, copy your config files to **/sdcard/Tasker/ModeConfigs** (Which is the default, you can also specify a different location during the setup)
+    and begin playing around with your different modes.
 
+**base.json** - the template for creating new configurations
 
-### Customize config files
-The base.config file should be used as a template for new config files. I have also included several of my config files as
-examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
-configuration, copy your config files to **/sdcard/Tasker/ModeConfigs** (Which is the default, you can also specify a different location during the setup)
-and begin playing around with your different modes.
-
-base.config
 ```json
 {
   "volume": {
@@ -81,66 +140,201 @@ base.config
   }
 }
 ```
-home.config
+
+When a property is omitted, left null, or is an empty array `[]`, that setting is left unchanged. Things like `null`, `true`, `false`, and integers (`1`, `2`, `42`)
+should never have quotes around them. Strings should always use double quotes. Proper indenting is nice but optional.
+
+# Changing Contexts
+The name of the config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/disactivate contexts within a task or with a profile. I personally only use profiles to handle context changes.
+
+To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to disactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
+
+# Examples
+Here is how I use this framework to automate the settings on my phone. *Note, I store all my profiles and tasks that control phone contexts in a separate Tasker project than the Modes project. This makes updating the Modes project seamless.*
+
+![My Modes](ReadmeFiles/MyModes.png)
+
+I have a primary context named `home` that is activated when I'm connected to my home Wifi network. `home.json` has the following configuration:
+
 ```json
 {
-  "volume": {
-    "notification": 3,
-    "media": 7,
-    "dnd": "all"
-  },
-  "wifiOn": null,
-  "bluetoothOn": null,
+  "type": 1,
+  "priority": 10,
+  "volume_notification": 3,
+  "volume_media": 7,
+  "dnd": "all",
+  "wifiOn": true,
+  "bluetoothOn": true,
   "screenRotationOn": false,
+  "displayTimeout": 1
+}
+```
+
+I have another primary context named `car` that is activated when I'm connected to my car's Bluetooth stereo. When this context is activated I run a task named `CarMode` that creates a notification so I can easily launch Android Auto, Google Music, Pocket Casts, or Maps. I run the same task, with a different parameter, on exit to dismiss the notification. `car.json` looks like this:
+
+```json
+{
+  "type": 1,
+  "priority": 60,
+  "volume_notification": 5,
+  "volume_media": 15,
+  "dnd": "all",
+  "wifiOn": false,
+  "bluetoothOn": true,
+  "screenRotationOn": true,
+  "displayTimeout": 5,
   "enter": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
     "tasksToRun": [{
-      "name": "LampOnAtNight",
+      "name": "CarMode",
+      "priority": 10,
+      "param1": "enter",
+      "param2": ""
+    }]
+  },
+  "exit": {
+    "tasksToRun": [{
+      "name": "CarMode",
+      "priority": 10,
+      "param1": "exit",
+      "param2": ""
+    }]
+  }
+}
+```
+
+I like to just have my phone vibrate when I'm at my office so I also have a `work` context that is activated when Wifi Near detects my work's network (since I don't always connect to the network). The `work.json` file sets both volumes to `0`, which means vibrate-only for notifications, and turns on a profile named `Work App Hider` that will navigate to the homescreen if I turn on my display and any non-work apps are open (like Youtube or Reddit) to make it look like I would never waste time at the office if I need to show someone something on my phone. The `Work App Hider` profile is then disabled when I'm no longer at the office.
+
+```json
+{
+  "type": 1,
+  "priority": 11,
+  "volume_notification": 0,
+  "volume_media": 0,
+  "dnd": "all",
+  "wifiOn": true,
+  "screenRotationOn": false,
+  "displayTimeout": 1,
+  "enter": {
+    "profilesToEnable": ["Work App Hider"]
+  },
+  "exit": {
+    "profilesToDisable": ["Work App Hider"]
+  }
+}
+```
+
+My last primary context is `other` and it is set as my `%Modes_DefaultContext`, so when no other primary contexts are active my phone will use `other.json` for the primary settings.
+
+```json
+{
+  "type": 1,
+  "priority": 5,
+  "volume_notification": 1,
+  "volume_media": 2,
+  "dnd": "all",
+  "wifiOn": true,
+  "screenRotationOn": false,
+  "displayTimeout": 1
+}
+```
+
+Now on to my `secondary` contexts. First is `night` which turns on from 11pm until my first alarm. It enables priority-only notifications and calls a task named `NightMode` which turns off touch vibrations, lowers auto brightness, and gets my next alarm's time so night mode will turn off when my alarm goes off. On exit, I restore my settings for touch vibrations and auto brightness (changing those setting requires root and so I don't include them in the framework) and enable a profile named `ExitNightMode` that will present me with helpful information about my day the first time I unlock my phone.
+
+*Note that night mode has a priority of 50 and will take precedence over all primary contexts except for car. I did this in case I'm driving home late because otherwise night mode would mute my music.*
+
+```json
+{
+  "type": 2,
+  "priority": 50,
+  "volume_notification": 1,
+  "volume_media": 0,
+  "dnd": "priority",
+  "enter": {
+    "tasksToRun": [{
+      "name": "NightMode",
       "priority": 10,
       "param1": "",
       "param2": ""
     }]
   },
   "exit": {
-    "profilesToDisable": [],
-    "profilesToEnable": [],
-    "tasksToRun": []
+    "profilesToEnable": ["ExitNightMode"],
+    "tasksToRun": [{
+      "name": "TouchVibrations",
+      "priority": 10,
+      "param1": "on",
+      "param2": ""
+    }, {
+      "name": "AutoBrightnessPercent",
+      "priority": 10,
+      "param1": "45",
+      "param2": ""
+    }]
   }
 }
 ```
-When a property is left null (or an empty array: []) that property is left unchanged. Things like null, true, false, and integers
-should never have quotes around them. Strings should always use double quotes. Proper indenting is nice but optional.
 
-### Changing phone modes
-The name of the config files are important because when you want to use a configuration all you have to do is change %PHONEMODE
-to that config's name. When %PHONEMODE = home, home.config is used. You can change modes manually within a task or with a profile. I personally
-only use profiles to change modes.
+The rest of my `secondary` contexts are very basic and just change a setting or two.
 
-For example, I have a profile named HomeMode that is triggered by Wifi Connected to my home SSID. I have another profile named CarMode that is
-triggered by Bluetooth Connected to my car's stereo.
+`earbuds.json` - when headphones are plugged in or connected to Bluetooth earbuds
 
-Another profile is NightMode which turns on priority-only notifications, lowers screen brightness, and a few other things. Since I'm almost always
-at home when NightMode becomes active, I added a second condition to HomeMode. HomeMode is active when connected to my home wireless network and
-also when NightMode is not active.  This way if I arrive home late, ringer and brightness will stay in NightMode settings and not switch to HomeMode
-settings. 
+```json
+{
+  "type": 2,
+  "priority": 80,
+  "volume_media": 5
+}
+```
 
-I also have a profile named OtherMode that is active when none of my other mode profiles are active. This profile is active when I'm out and about
-and puts my phone in a quiet but audible state. One caveat with this profile is that I put a 5 second wait first and then change %PHONEMODE to 'other'
-only if the OtherMode profile is still active. I do this because sometimes when switching modes, OtherMode will become active for a split second and
-can lead to your desired settings being overwritten.
+`music.json` - when connected to Bluetooth speakers or in when apps are open that I want the media volume cranked all the way up.
 
-How modes are changed is entirely dependent on your personal setup, so you are free to trigger modes however you see fit. If you want to use network
-location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app because you don't have
-bluetooth in the car, go for it.
+```json
+{
+  "type": 2,
+  "priority": 55,
+  "volume_media": 15
+}
+```
 
-Here are my profiles as an example (a forward slash '/' is used as an 'or')
+`silent.json` - when in a work calendar event is active or at church or a movie theater (wifi near).
 
-![My profiles screenshot](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/ReadmeFiles/MyModes.png "My profiles")
+```json
+{
+  "type": 2,
+  "priority": 95,
+  "volume_notification": 0,
+  "volume_media": 0,
+  "dnd": "none"
+}
+```
 
-And "Other mode" that's only active when all other modes are inactive
+`rotate.json` - for the few apps I like to have rotation enabled (Youtube, Photos, and other video apps)
 
-![Other mode screenshot](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/ReadmeFiles/OtherMode.png "Other Mode")
+```json
+{
+  "type": 2,
+  "priority": 80,
+  "screenRotationOn": true
+}
+```
 
-# TODO
-- Add ability to check for JavaScript updates on a daily basis
+How contexts are changed is entirely dependent on your personal setup, so you are free to add/remove contexts however you see fit. If you want to use network location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app being open because you don't have a bluetooth stereo, go for it.
+
+# Upgrading From Version 0.0.1
+In version `0.0.1` there was just a single mode active at one time and the `%PHONEMODE` variable just contained a single context. Since version `1.0.0` introduces the ability to have multiple contexts active at once, you'll need to change how any profiles/tasks activate and inactivate contexts. In addition the names of the global variables have been updated to ensure uniqueness. Follow the following steps to upgrade to the new version:
+
+1. Delete the existing Modes project in Tasker
+
+    Long press on `Modes` in the bottom bar and select `Delete`
+
+1. Import the new Modes project into Tasker
+
+    Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone. Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
+
+1. Run the Setup task to set the appropriate variables.
+1. Update your existing profiles/tasks that set the `%PHONEMODE` variable.
+
+    Replace the `Variable Set` step with a `Perform Task` action that calls the task `AddToContext` with `Parameter 1` set to the name of the context.
+1. Add an Exit Task or another step in a task to remove the context when necessary.
+
+    Add a step with a `Perform Task` action that calls the `RemoveFromContext` task with `Parameter 1` set to the name of the context.

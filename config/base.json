@@ -1,15 +1,18 @@
 {
-  "volume": {
-    "notification": "null or integer (0-7)",
-    "media": "null or integer (0-15)",
-    "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)"
-  },
+  "type": "null or integer (1 for primary or 2 for secondary)",
+  "priority": "null or integer (0-100)",
+  "volume_notification": "null or integer (0-7)",
+  "volumn_media": "null or integer (0-15)",
+  "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)",
+  "location": "null, off (to turn off location), accuracy (for High Accuracy), battery (for Battery Saver), or device (for Device Only)",
   "wifiOn": "null or boolean",
   "bluetoothOn": "null or boolean",
+  "airplaneModeOn": "null or boolean",
   "screenRotationOn": "null or boolean",
+  "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
-    "profilesToEnable": [],
+    "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],
     "tasksToRun": [{
       "name": "TaskName1",
       "priority": 10,

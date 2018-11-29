@@ -1,24 +1,26 @@
 {
   "type": 1,
-  "priority": 60,
-  "volume_notification": 5,
-  "volume_media": 15,
+  "priority": 65,
+  "volume_notification": 0,
+  "volume_media": 0,
   "dnd": "all",
-  "wifiOn": false,
+  "wifiOn": true,
   "bluetoothOn": true,
   "screenRotationOn": true,
-  "displayTimeout": 5,
+  "displayTimeout": 2,
   "enter": {
+    "profilesToEnable": ["TestProfile"],
     "tasksToRun": [{
-      "name": "CarMode",
+      "name": "TestTask",
       "priority": 10,
       "param1": "enter",
       "param2": ""
     }]
   },
   "exit": {
+    "profilesToDisable": ["TestProfile"],
     "tasksToRun": [{
-      "name": "CarMode",
+      "name": "TestTask",
       "priority": 10,
       "param1": "exit",
       "param2": ""
