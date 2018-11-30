@@ -12,12 +12,41 @@ This framework monitors a variable `%Modes_Contexts` which contains a list of yo
 
 To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter. The `ContextChanged` profile will pickup the change and read the configurations for all active contexts. Configuration file names should match the context names in Tasker i.e. if you have a context named `home`, the framework will look for a configuration file named `home.json` for its configuration.
 
-If multiple contexts are active, the framework does a few things to determine what the device settings should be set to. Only the highest priority `primary` (see the configuration spec for a description of `primary` and `secondary` contexts) context will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts. Also, `secondary` context's settings will take precidence over `primary` context's settings.
+If multiple contexts are active, the framework does a few things to determine how the device settings should be set. Only the highest priority `primary` context (see the [configuration spec](#configuration-spec) section for a description of `primary` and `secondary` contexts) will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts if they change the same setting. Also, any `secondary` context's settings will take precidence over `primary` context's settings even if they share the same priority.
+
+**Supported Settings**  
+Out of the box the following settings changes are supported:
+
+* Notification Volume
+* Media Volume
+* Do Not Disturb Mode
+* Location Mode
+* Wifi on/off
+* Bluetooth on/off
+* Airplane Mode on/off
+* Display Rotation on/off
+* Display Timeout
+* And much more\*
+
+\* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
 
 See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
+# Framework Advantages Over Standard Tasker Profiles
+1. Profile conflict management
+    
+    With standard profiles if you want to avoid a profile being active while another is active you have to do some sort of check, like `%PACTIVE` regex matches the other profile name or set a custom global variable with a value when the other profile is active and add that as a condition to your profile. With this framework you don't need those checks because the `type` and `priority` properties handle that for you, so you can create profiles with a simple, single condition and let the framework handle the rest.
+
+1. Configuration merging
+
+    With this framework, since multiple contexts can be active at once, your configurations for each state will be merged and the highest priority for each setting will take affect. When one of the states is disactivated, the settings are re-merged and changed accordingly. Doing this with normal profiles and tasks would be quite the challenge because you would have to write lengthy exit conditions, or a really big, nasty task to handle the changes. See the next point...
+
+1. One task (and a few helpers) to take care of all the work
+
+    When you use normal profiles and tasks to change settings dependent on your situation, you either have to create one giant task with a lot of `if` statements in it, or each profile has a task with a lot of the same steps repeated in them. With this framework you can change a bunch of settings without creating any extra tasks and all the logic is written in JavaScript which is a lot easier to work with than Tasker's.
+
 # Configuration Spec
-The configuration files contain a single JSON object with the following properties. All properties are optional and a few have default values if they are not specified. If you omit a property that doesn't have a default value from your configuration, that setting will remain unchanged.
+The configuration files each contain a single JSON object with the following properties. All properties are optional and a few have default values if they are not specified. If you omit a property that doesn't have a default value from your configuration, that setting will remain unchanged.
 
 * `type` - whether the context is a primary or secondary type
   * `1` - a primary context (default). Think of a primary context as a place like home, work, car, etc. Primary contexts often contain multiple settings changes and possibly running other tasks or enabling/disabling other profiles.
@@ -67,6 +96,8 @@ The configuration files contain a single JSON object with the following properti
       * `param2` - the second parameter to pass to the task (string)
 * `exit` - profiles to enable/disable and tasks to run when the context is removed
   * An object containing the same properties as `enter`
+
+See the [Examples](#examples) section for my real world configuration files.
 
 # Profiles
 The framework just uses a single profile to handle context changes:
