@@ -2,7 +2,7 @@
 	<Profile sr="prof114" ve="2">
 		<cdate>1543411337077</cdate>
 		<clp>true</clp>
-		<edate>1543528423917</edate>
+		<edate>1543601205979</edate>
 		<id>114</id>
 		<mid0>115</mid0>
 		<nme>ContextChanged</nme>
@@ -18,7 +18,7 @@
 		<cdate>1469483841722</cdate>
 		<name>Modes</name>
 		<pids>114</pids>
-		<tids>115,113,39,13,112,20,9</tids>
+		<tids>9,13,113,20,115,112,39</tids>
 	</Project>
 	<Task sr="task112">
 		<cdate>1543115059459</cdate>
@@ -79,7 +79,7 @@ if (index &gt; -1) {
 	</Task>
 	<Task sr="task115">
 		<cdate>1543411345625</cdate>
-		<edate>1543529076544</edate>
+		<edate>1543601205979</edate>
 		<id>115</id>
 		<nme>ContextChanged</nme>
 		<pri>6</pri>
@@ -98,16 +98,16 @@ if (index &gt; -1) {
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.0.0';
+let version = '1.0.1';
 setGlobal('Modes-Version', version);
 
 let configPath = global('Modes_ConfigPath');
 let defaultContext = global('Modes_DefaultContext');
-let contexts = global('Modes_Contexts').split(',');
-let previousContexts = global('Modes_ActiveContexts').split(',');
+let contexts = global('Modes_Contexts').split(',').filter(c =&gt; { return (c !== '') });
+let previousContexts = global('Modes_ActiveContexts').split(',').filter(c =&gt; { return (c !== '') });
 
 // Read config files
-let configs = contexts.filter(c =&gt; { return (c !== '') }).map(context =&gt; {
+let configs = contexts.map(context =&gt; {
   return readConfigFile(context);
 });
 

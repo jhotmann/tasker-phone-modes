@@ -2,16 +2,16 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.0.0';
+let version = '1.0.1';
 setGlobal('Modes-Version', version);
 
 let configPath = global('Modes_ConfigPath');
 let defaultContext = global('Modes_DefaultContext');
-let contexts = global('Modes_Contexts').split(',');
-let previousContexts = global('Modes_ActiveContexts').split(',');
+let contexts = global('Modes_Contexts').split(',').filter(c => { return (c !== '') });
+let previousContexts = global('Modes_ActiveContexts').split(',').filter(c => { return (c !== '') });
 
 // Read config files
-let configs = contexts.filter(c => { return (c !== '') }).map(context => {
+let configs = contexts.map(context => {
   return readConfigFile(context);
 });
 
