@@ -2,8 +2,8 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.0.1';
-setGlobal('Modes-Version', version);
+let version = '1.1.0';
+setGlobal('Modes_Version', version);
 
 let configPath = global('Modes_ConfigPath');
 let defaultContext = global('Modes_DefaultContext');
@@ -62,6 +62,7 @@ if (Object.keys(merged).indexOf('bluetoothOn') > -1 && typeof merged.bluetoothOn
 if (Object.keys(merged).indexOf('airplaneModeOn') > -1 && typeof merged.airplaneModeOn === 'boolean') setAirplaneMode(merged.airplaneModeOn);
 if (Object.keys(merged).indexOf('screenRotationOn') > -1 && typeof merged.screenRotationOn === 'boolean') performTask('DisplayRotate', 10, merged.screenRotationOn, '');
 if (Object.keys(merged).indexOf('displayTimeout') > -1 && Number.isInteger(merged.displayTimeout)) displayTimeout(0, merged.displayTimeout, 0);
+if (Object.keys(merged).indexOf('displayBrightness') > -1 && (Number.isInteger(merged.displayBrightness) || typeof merged.displayBrightness === 'string')) performTask('DisplayBrightness', 10, merged.displayBrightness, '');
 
 // Perform enter parameters for new contexts
 configs

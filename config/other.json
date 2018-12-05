@@ -6,5 +6,6 @@
   "dnd": "all",
   "wifiOn": true,
   "screenRotationOn": false,
-  "displayTimeout": 1
+  "displayTimeout": 1,
+  "displayBrightness": "auto"
 }

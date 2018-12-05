@@ -7,6 +7,7 @@
   "wifiOn": true,
   "screenRotationOn": false,
   "displayTimeout": 1,
+  "displayBrightness": "auto",
   "enter": {
     "profilesToEnable": ["Work App Hider"]
   },

@@ -123,6 +123,8 @@ The following tasks are included in the framework:
 
 
 # Installation and Configuration
+The easy way is to head to the [releases](https://github.com/jhotmann/tasker-phone-modes/releases) page and use the Taskernet url for the project to install. If you'd like to install manually you can do the following steps:
+
 1. ### Import Modes.prj.xml into Tasker
     Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
     Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
@@ -152,6 +154,7 @@ The following tasks are included in the framework:
   "airplaneModeOn": "null or boolean",
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
+  "displayBrightness": "null, auto, integer (0-255)",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
     "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],
@@ -200,7 +203,8 @@ I have a primary context named `home` that is activated when I'm connected to my
   "wifiOn": true,
   "bluetoothOn": true,
   "screenRotationOn": false,
-  "displayTimeout": 1
+  "displayTimeout": 1,
+  "displayBrightness": "auto"
 }
 ```
 
@@ -217,6 +221,7 @@ I have another primary context named `car` that is activated when I'm connected 
   "bluetoothOn": true,
   "screenRotationOn": true,
   "displayTimeout": 5,
+  "displayBrightness": "auto",
   "enter": {
     "tasksToRun": [{
       "name": "CarMode",
@@ -248,6 +253,7 @@ I like to just have my phone vibrate when I'm at my office so I also have a `wor
   "wifiOn": true,
   "screenRotationOn": false,
   "displayTimeout": 1,
+  "displayBrightness": "auto",
   "enter": {
     "profilesToEnable": ["Work App Hider"]
   },
@@ -268,7 +274,8 @@ My last primary context is `other` and it is set as my `%Modes_DefaultContext`, 
   "dnd": "all",
   "wifiOn": true,
   "screenRotationOn": false,
-  "displayTimeout": 1
+  "displayTimeout": 1,
+  "displayBrightness": "auto"
 }
 ```
 
@@ -283,6 +290,7 @@ Now on to my `secondary` contexts. First is `night` which turns on from 11pm unt
   "volume_notification": 1,
   "volume_media": 0,
   "dnd": "priority",
+  "displayBrightness": 5,
   "enter": {
     "tasksToRun": [{
       "name": "NightMode",

@@ -10,6 +10,7 @@
   "airplaneModeOn": "null or boolean",
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
+  "displayBrightness": "null, auto, integer (0-255)",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
     "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],

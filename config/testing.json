@@ -8,6 +8,7 @@
   "bluetoothOn": true,
   "screenRotationOn": true,
   "displayTimeout": 2,
+  "displayBrightness": 150,
   "enter": {
     "profilesToEnable": ["TestProfile"],
     "tasksToRun": [{

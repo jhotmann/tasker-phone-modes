@@ -8,6 +8,7 @@
   "bluetoothOn": true,
   "screenRotationOn": true,
   "displayTimeout": 5,
+  "displayBrightness": "auto",
   "enter": {
     "tasksToRun": [{
       "name": "CarMode",

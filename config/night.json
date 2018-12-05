@@ -4,6 +4,7 @@
   "volume_notification": 1,
   "volume_media": 0,
   "dnd": "priority",
+  "displayBrightness": 5,
   "enter": {
     "tasksToRun": [{
       "name": "NightMode",
