@@ -26,6 +26,7 @@ Out of the box the following settings changes are supported:
 * Airplane Mode on/off
 * Display Rotation on/off
 * Display Timeout
+* Display Brightness
 * And much more\*
 
 \* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
@@ -35,7 +36,7 @@ See the technical details below and the examples from my own setup to help paint
 # Framework Advantages Over Standard Tasker Profiles
 1. Profile conflict management
     
-    With standard profiles if you want to avoid a profile being active while another is active you have to do some sort of check, like `%PACTIVE` regex matches the other profile name or set a custom global variable with a value when the other profile is active and add that as a condition to your profile. With this framework you don't need those checks because the `type` and `priority` properties handle that for you, so you can create profiles with a simple, single condition and let the framework handle the rest.
+    With standard profiles if you want to avoid a profile being active while another is active you have to do some sort of check, like `%PACTIVE` regex matching the other profile name(s) or set a custom global variable with a value when the other profile is active and add that as a condition to your profile. With this framework you don't need those checks because the `type` and `priority` properties handle that for you, so you can create profiles with a simple, single condition and let the framework handle the rest.
 
 1. Configuration merging
 
@@ -85,6 +86,9 @@ The configuration files each contain a single JSON object with the following pro
 * `displayTimeout` - set the display timeout in minutes
   * An integer from `1` to ???
   * I'm not sure what the maximum timeout is
+* `displayBrightness` - change the display brightness
+  * An integer from `0` to `255`
+  * `"auto"` will restore auto brightness
 * `enter` - profiles to enable/disable and tasks to run when the context is activated
   * An object containing any of the following properties
     * `profilesToDisable` - an array of profile names to disable: `["ProfileName1", "ProfileName2"]`
@@ -134,12 +138,14 @@ The easy way is to head to the [releases](https://github.com/jhotmann/tasker-pho
     Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
 
 1. ### Customize config files
-    The base.json file should be used as a template for new config files. I have also included several of my config files as
+    As of version `1.1.0` there is a `ConfigCreator` task that can be used to quickly create or edit a configuration. It uses a series of dialogs to guide you through all the configuration optoins.
+    
+    If you'd like to create configuration files manually, the base.json file can be used as a template. I have also included several of my config files as
     examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
-    configuration, copy your config files to **/sdcard/Tasker/ModeConfigs** (Which is the default, you can also specify a different location during the setup)
+    configuration, copy your config files to `/sdcard/Tasker/ModeConfigs` (which is the default, you can also specify a different location during the setup)
     and begin playing around with your different modes.
 
-**base.json** - the template for creating new configurations
+`base.json` - the template for creating new configurations
 
 ```json
 {

@@ -38,14 +38,14 @@ try {
 if (confirm('Do you want to change the notification volume?')) {
   let vol = prompt('What would you like the notification volume set to?\n(Enter a number from 0 to 7)', getDefaultValue(config, 'volume_notification', ''));
   if (Number.isInteger(parseInt(vol))) {
-    config.volume_notification = vol;
+    config.volume_notification = parseInt(vol);
   }
 }
 
 if (confirm('Do you want to change the media volume?')) {
   let vol = prompt('What would you like the media volume set to?\n(Enter a number from 0 to 15)', getDefaultValue(config, 'volume_media', ''));
   if (Number.isInteger(parseInt(vol))) {
-    config.volume_media = vol;
+    config.volume_media = parseInt(vol);
   }
 }
 
@@ -98,7 +98,16 @@ if (confirm('Do you want to change the display rotation status?')) {
 if (confirm('Do you want to change the display timeout?')) {
   let min = prompt('What would you like the timeout set to?\n(Enter a number of minutes)', getDefaultValue(config, 'displayTimeout', ''));
   if (Number.isInteger(parseInt(min))) {
-    config.displayTimeout = min;
+    config.displayTimeout = parseInt(min);
+  }
+}
+
+if (confirm('Do you want to change the display brightness?')) {
+  let brightness = prompt('What would you like the brightness to?\n(Enter a number 0 to 255 or auto)', getDefaultValue(config, 'displayBrightness', ''));
+  if (Number.isInteger(parseInt(brightness))) {
+    config.displayBrightness = parseInt(brightness);
+  } else if (brightness === 'auto') {
+    config.displayBrightness = 'auto';
   }
 }
 
@@ -157,8 +166,8 @@ function taskQuestions() {
     return null;
   }
   let priority = parseInt(prompt('What priority would you like to execute this task with?', '10'));
-  if (Number.isInteger(priority)) {
-    taskObj.priority = priority;
+  if (Number.isInteger(parseInt(priority))) {
+    taskObj.priority = parseInt(priority);
   } else {
     taskObj.priority = 10;
   }
