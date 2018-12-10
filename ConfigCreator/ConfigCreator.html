@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Config Creator</title>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <h1 style="padding-top:20px;padding-bottom:20px;">Configuration Creator</h1>
+      <form id="config-form">
+        <div class="row">
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Type</h5>
+                <p class="card-text">
+                  <p>Primary or secondary. Only one primary context can be active at a time while multiple secondary contexts can be active simultaneously. Primary contexts are often places, while secondary contexts are modifiers on top of the primary context.</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="typeRadios" id="typeRadios1" value="1" checked>
+                    <label class="form-check-label" for="typeRadios1">Primary</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="typeRadios" id="typeRadios2" value="2">
+                    <label class="form-check-label" for="typeRadios2">Secondary</label>
+                  </div>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Priority</h5>
+                <p class="card-text">
+                  <p>The highest priority primary context will be active and any secondary context with equal or higher priority will be active. Use this value to make certain contexts take precedence over other contexts.</p>
+                  <input class="form-control" name="priorityInput" id="priorityInput" placeholder="Enter a number 1 to 100">
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Volumes</h5>
+                <p class="card-text">
+                  <p>Set the notification and media volumes.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="notifVolCheck1" id="notifVolCheck1">
+                    <label class="form-check-label" for="notifVolCheck1">Change notification volume</label>
+                    <input class="form-control" name="notifVolInput" id="notifVolInput" placeholder="Enter a number 0 to 7" disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="mediaVolCheck1" id="mediaVolCheck1">
+                    <label class="form-check-label" for="mediaVolCheck1">Change media volume</label>
+                    <input class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 to 15" disabled>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Do Not Disturb</h5>
+                <p class="card-text">
+                  <p>Set the do not disturb mode.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="dndCheck1" id="dndCheck1">
+                    <label class="form-check-label" for="dndCheck1">Change DND mode</label>
+                  </p>
+                  <fieldset id="dndFieldset" disabled>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="dndRadios" id="dndRadios1" value="all" checked>
+                      <label class="form-check-label" for="dndRadios1">All - Receive all notifications</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="dndRadios" id="dndRadios2" value="priority">
+                      <label class="form-check-label" for="dndRadios2">Priority - Priority-only notifications</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="dndRadios" id="dndRadios3" value="alarms">
+                      <label class="form-check-label" for="dndRadios3">Alarms - alarms only</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="dndRadios" id="dndRadios4" value="none">
+                      <label class="form-check-label" for="dndRadios4">None - complete silence</label>
+                    </div>
+                  </fieldset>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Location</h5>
+                <p class="card-text">
+                  <p>Set the location mode.</p>
+                  <p class="font-italic">Note: requires you to grant Tasker WRITE_SECURE_SETTINGS permission</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="locationCheck1" id="locationCheck1">
+                    <label class="form-check-label" for="locationCheck1">Change location mode</label>
+                  </p>
+                  <fieldset id="locationFieldset" disabled>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="locationRadios" id="locationRadios1" value="off" checked>
+                      <label class="form-check-label" for="locationRadios1">Off - location services off</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="locationRadios" id="locationRadios2" value="accuracy">
+                      <label class="form-check-label" for="locationRadios2">Accuracy - high accuracy mode</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="locationRadios" id="locationRadios3" value="battery">
+                      <label class="form-check-label" for="locationRadios3">Battery - battery saver mode</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="locationRadios" id="locationRadios4" value="device">
+                      <label class="form-check-label" for="locationRadios4">Device - device only mode</label>
+                    </div>
+                  </fieldset>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Radios</h5>
+                <p class="card-text">
+                  <p>Turn on/off device radios.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="wifiCheck1" id="wifiCheck1">
+                    <label class="form-check-label" for="wifiCheck1">Turn Wifi on/off</label>
+                    <fieldset id="wifiFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio1" value="true" checked>
+                        <label class="form-check-label" for="wifiRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio2" value="false">
+                        <label class="form-check-label" for="wifiRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="bluetoothCheck1" id="bluetoothCheck1">
+                    <label class="form-check-label" for="bluetoothCheck1">Turn Bluetooth on/off</label>
+                    <fieldset id="bluetoothFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio1" value="true" checked>
+                        <label class="form-check-label" for="bluetoothRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio2" value="false">
+                        <label class="form-check-label" for="bluetoothRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="airplaneCheck1" id="airplaneCheck1">
+                    <label class="form-check-label" for="airplaneCheck1">Turn Airplane Mode on/off</label>
+                    <fieldset id="airplaneFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio1" value="true" checked>
+                        <label class="form-check-label" for="airplaneRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio2" value="false">
+                        <label class="form-check-label" for="airplaneRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Display</h5>
+                <p class="card-text">
+                  <p>Change display settings.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="rotationCheck1" id="rotationCheck1">
+                    <label class="form-check-label" for="rotationCheck1">Turn display rotation on/off</label>
+                    <fieldset id="rotationFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio1" value="true" checked>
+                        <label class="form-check-label" for="rotationRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio2" value="false">
+                        <label class="form-check-label" for="rotationRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="timeoutCheck1" id="timeoutCheck1">
+                    <label class="form-check-label" for="timeoutCheck1">Change display timeout (minutes)</label>
+                    <input class="form-control" name="timeoutInput" id="timeoutInput" placeholder="Enter a number 1 or higher" disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="brightnessCheck1" id="brightnessCheck1">
+                    <label class="form-check-label" for="brightnessCheck1">Change display brightness</label>
+                    <input class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Other</h5>
+                <p class="card-text">
+                  <p>Turn on/off other settings.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="hapticCheck1" id="hapticCheck1">
+                    <label class="form-check-label" for="hapticCheck1">Turn haptic feedback on/off</label>
+                    <fieldset id="hapticFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="hapticRadio" id="hapticRadio1" value="true" checked>
+                        <label class="form-check-label" for="hapticRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="hapticRadio" id="hapticRadio2" value="false">
+                        <label class="form-check-label" for="hapticRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="batteryCheck1" id="batteryCheck1">
+                    <label class="form-check-label" for="batteryCheck1">Turn battery saver on/off</label>
+                    <fieldset id="batteryFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="batteryRadio" id="batteryRadio1" value="true" checked>
+                        <label class="form-check-label" for="batteryRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="batteryRadio" id="batteryRadio2" value="false">
+                        <label class="form-check-label" for="batteryRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="btn btn-primary" type="submit">Generate Config</button>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+      $("#notifVolCheck1").change(function() {
+        if(this.checked) {
+          $("#notifVolInput").prop("disabled", false);
+        } else {
+          $("#notifVolInput").prop("disabled", true);
+        }
+      });
+      $("#mediaVolCheck1").change(function() {
+        if(this.checked) {
+          $("#mediaVolInput").prop("disabled", false);
+        } else {
+          $("#mediaVolInput").prop("disabled", true);
+        }
+      });
+      $("#dndCheck1").change(function() {
+        if(this.checked) {
+          $("#dndFieldset").prop("disabled", false);
+        } else {
+          $("#dndFieldset").prop("disabled", true);
+        }
+      });
+      $("#locationCheck1").change(function() {
+        if(this.checked) {
+          $("#locationFieldset").prop("disabled", false);
+        } else {
+          $("#locationFieldset").prop("disabled", true);
+        }
+      });
+      $("#wifiCheck1").change(function() {
+        if(this.checked) {
+          $("#wifiFieldset").prop("disabled", false);
+        } else {
+          $("#wifiFieldset").prop("disabled", true);
+        }
+      });
+      $("#bluetoothCheck1").change(function() {
+        if(this.checked) {
+          $("#bluetoothFieldset").prop("disabled", false);
+        } else {
+          $("#bluetoothFieldset").prop("disabled", true);
+        }
+      });
+      $("#airplaneCheck1").change(function() {
+        if(this.checked) {
+          $("#airplaneFieldset").prop("disabled", false);
+        } else {
+          $("#airplaneFieldset").prop("disabled", true);
+        }
+      });
+      $("#rotationCheck1").change(function() {
+        if(this.checked) {
+          $("#rotationFieldset").prop("disabled", false);
+        } else {
+          $("#rotationFieldset").prop("disabled", true);
+        }
+      });
+      $("#timeoutCheck1").change(function() {
+        if(this.checked) {
+          $("#timeoutInput").prop("disabled", false);
+        } else {
+          $("#timeoutInput").prop("disabled", true);
+        }
+      });
+      $("#brightnessCheck1").change(function() {
+        if(this.checked) {
+          $("#brightnessInput").prop("disabled", false);
+        } else {
+          $("#brightnessInput").prop("disabled", true);
+        }
+      });
+      $("#hapticCheck1").change(function() {
+        if(this.checked) {
+          $("#hapticFieldset").prop("disabled", false);
+        } else {
+          $("#hapticFieldset").prop("disabled", true);
+        }
+      });
+      $("#batteryCheck1").change(function() {
+        if(this.checked) {
+          $("#batteryFieldset").prop("disabled", false);
+        } else {
+          $("#batteryFieldset").prop("disabled", true);
+        }
+      });
+
+
+      function processForm(e) {
+        if (e.preventDefault) e.preventDefault();
+        var formObj = $("#config-form :input").serializeArray();
+        console.dir(formObj);
+        var configObj = {};
+        configObj.type = parseInt(formObj.find(o => { return (o.name === "typeRadios"); }).value);
+        var priority = formObj.find(o => { return (o.name === "priorityInput"); }).value || 50;
+        configObj.priority = parseInt(priority);
+        var notifVolObj = formObj.find(o => { return (o.name === "notifVolInput"); });
+        if (notifVolObj !== undefined && notifVolObj.value !== "" && Number.isInteger(parseInt(notifVolObj.value))) configObj.volume_notification = parseInt(notifVolObj.value);
+        console.dir(configObj);
+        return false;
+      }
+
+      var form = document.getElementById('config-form');
+      if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+      } else {
+        form.addEventListener("submit", processForm);
+      }
+    </script>
+  </body>
+</html>
