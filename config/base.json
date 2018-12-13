@@ -11,6 +11,8 @@
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
+  "hapticFeedbackOn": "null or boolean",
+  "batterySaverOn": "null or boolean",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
     "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],

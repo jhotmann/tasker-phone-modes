@@ -5,6 +5,7 @@
   "volume_media": 0,
   "dnd": "priority",
   "displayBrightness": 5,
+  "hapticFeedbackOn": false,
   "enter": {
     "tasksToRun": [{
       "name": "NightMode",
@@ -16,14 +17,9 @@
   "exit": {
     "profilesToEnable": ["ExitNightMode"],
     "tasksToRun": [{
-      "name": "TouchVibrations",
+      "name": "TwilightMode",
       "priority": 10,
-      "param1": "on",
-      "param2": ""
-    }, {
-      "name": "AutoBrightnessPercent",
-      "priority": 10,
-      "param1": "45",
+      "param1": "off",
       "param2": ""
     }]
   }

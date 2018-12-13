@@ -2,7 +2,7 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.1.1';
+let version = '1.2.0';
 setGlobal('Modes_Version', version);
 
 let configPath = global('Modes_ConfigPath');
@@ -53,16 +53,18 @@ secondaryContexts.forEach(context => {
 });
 
 // Change settings according to merged context
-if (Object.keys(merged).indexOf('volume_notification') > -1 && Number.isInteger(merged.volume_notification)) notificationVol(merged.volume_notification, false, false);
-if (Object.keys(merged).indexOf('volume_media') > -1 && Number.isInteger(merged.volume_media)) mediaVol(merged.volume_media, false, false);
-if (Object.keys(merged).indexOf('dnd') > -1 && typeof merged.dnd === 'string') performTask('DoNotDisturb', 10, merged.dnd, '');
-if (Object.keys(merged).indexOf('location') > -1 && typeof merged.location === 'string') performTask('LocationMode', 10, merged.location, '');
-if (Object.keys(merged).indexOf('wifiOn') > -1 && typeof merged.wifiOn === 'boolean') setWifi(merged.wifiOn);
-if (Object.keys(merged).indexOf('bluetoothOn') > -1 && typeof merged.bluetoothOn === 'boolean') setBT(merged.bluetoothOn);
-if (Object.keys(merged).indexOf('airplaneModeOn') > -1 && typeof merged.airplaneModeOn === 'boolean') setAirplaneMode(merged.airplaneModeOn);
-if (Object.keys(merged).indexOf('screenRotationOn') > -1 && typeof merged.screenRotationOn === 'boolean') performTask('DisplayRotate', 10, merged.screenRotationOn, '');
-if (Object.keys(merged).indexOf('displayTimeout') > -1 && Number.isInteger(merged.displayTimeout)) displayTimeout(0, merged.displayTimeout, 0);
-if (Object.keys(merged).indexOf('displayBrightness') > -1 && (Number.isInteger(merged.displayBrightness) || typeof merged.displayBrightness === 'string')) performTask('DisplayBrightness', 10, merged.displayBrightness, '');
+if (existsIsType(merged, 'volume_notification', 'int')) notificationVol(merged.volume_notification, false, false);
+if (existsIsType(merged, 'volume_media', 'int')) mediaVol(merged.volume_media, false, false);
+if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
+if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
+if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
+if (existsIsType(merged, 'bluetoothOn', 'boolean')) setBT(merged.bluetoothOn);
+if (existsIsType(merged, 'airplaneModeOn', 'boolean')) setAirplaneMode(merged.airplaneModeOn);
+if (existsIsType(merged, 'screenRotationOn', 'boolean')) performTask('DisplayRotate', 10, merged.screenRotationOn, '');
+if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
+if (existsIsType(merged, 'displayBrightness', 'int') || existsIsType(merged, 'displayBrightness', 'string')) performTask('DisplayBrightness', 10, merged.displayBrightness, '');
+if (existsIsType(merged, 'hapticFeedbackOn', 'boolean')) performTask('TouchVibrations', 10, merged.hapticFeedbackOn, '');
+if (existsIsType(merged, 'batterySaverOn', 'boolean')) performTask('BatterySaver', 10, merged.batterySaverOn, '');
 
 // Perform enter parameters for new contexts
 configs
@@ -107,6 +109,14 @@ function missingItems(arr1, arr2) {
     return arr2.indexOf(item) === -1;
   });
   return missing;
+}
+
+function existsIsType(obj, key, type) {
+  if (type === 'int') {
+    return (Object.keys(obj).indexOf(key) > -1 && Number.isInteger(obj[key]));
+  } else {
+    return (Object.keys(obj).indexOf(key) > -1 && typeof obj[key] === type);
+  }
 }
 
 function changeProfileStatus(name, on) {

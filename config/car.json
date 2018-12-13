@@ -9,6 +9,7 @@
   "screenRotationOn": true,
   "displayTimeout": 5,
   "displayBrightness": "auto",
+  "hapticFeedbackOn": true,
   "enter": {
     "tasksToRun": [{
       "name": "CarMode",

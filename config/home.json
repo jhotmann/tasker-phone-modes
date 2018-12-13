@@ -8,5 +8,6 @@
   "bluetoothOn": true,
   "screenRotationOn": false,
   "displayTimeout": 1,
-  "displayBrightness": "auto"
+  "displayBrightness": "auto",
+  "hapticFeedbackOn": true
 }

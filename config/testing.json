@@ -9,6 +9,7 @@
   "screenRotationOn": true,
   "displayTimeout": 2,
   "displayBrightness": 150,
+  "batterySaverOn": true,
   "enter": {
     "profilesToEnable": ["TestProfile"],
     "tasksToRun": [{

@@ -7,12 +7,14 @@ Over time I have strived to refine my situation-based automation so that it's ea
 doesn't use the same steps in multiple tasks. I have now also made it universal so that anyone can import my simple
 profiles and quickly get automating.
 
+See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
+
 # Overview
 This framework monitors a variable `%Modes_Contexts` which contains a list of your current, active contexts i.e. if you are home, if you have headphones plugged in, if you are in a work meeting, etc. These contexts are up to you to think of and manage based on your needs. The framework looks at the configuration for these contexts and based on priorities and context types will determine what your current settings should be and sets them accordingly. Also when a context becomes active or inactive you can easily run other tasks or enable/disable other profiles accordingly.
 
 To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter. The `ContextChanged` profile will pickup the change and read the configurations for all active contexts. Configuration file names should match the context names in Tasker i.e. if you have a context named `home`, the framework will look for a configuration file named `home.json` for its configuration.
 
-If multiple contexts are active, the framework does a few things to determine how the device settings should be set. Only the highest priority `primary` context (see the [configuration spec](#configuration-spec) section for a description of `primary` and `secondary` contexts) will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts if they change the same setting. Also, any `secondary` context's settings will take precidence over `primary` context's settings even if they share the same priority.
+If multiple contexts are active, the framework does a few things to determine how the device settings should be set. Only the highest priority `primary` context (see the [configuration spec](#configuration-spec) section for a description of `primary` vs `secondary` contexts) will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts if they change the same setting. Also, any `secondary` context's settings will take precidence over `primary` context's settings even if they share the same priority.
 
 **Supported Settings**  
 Out of the box the following settings changes are supported:
@@ -20,18 +22,19 @@ Out of the box the following settings changes are supported:
 * Notification Volume
 * Media Volume
 * Do Not Disturb Mode
-* Location Mode
+* Location Mode+
 * Wifi on/off
 * Bluetooth on/off
 * Airplane Mode on/off
 * Display Rotation on/off
 * Display Timeout
 * Display Brightness
+* Haptic Feedback on/off+
+* Battery Saver on/off+
 * And much more\*
 
+\+ *Requires you to grant Tasker the `WRITE_SECURE_SETTINGS` permission. Instructions [here](https://tasker.joaoapps.com/userguide/en/help/ah_secure_setting_grant.html)*  
 \* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
-
-See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
 # Framework Advantages Over Standard Tasker Profiles
 1. Profile conflict management
@@ -50,8 +53,8 @@ See the technical details below and the examples from my own setup to help paint
 The configuration files each contain a single JSON object with the following properties. All properties are optional and a few have default values if they are not specified. If you omit a property that doesn't have a default value from your configuration, that setting will remain unchanged.
 
 * `type` - whether the context is a primary or secondary type
-  * `1` - a primary context (default). Think of a primary context as a place like home, work, car, etc. Primary contexts often contain multiple settings changes and possibly running other tasks or enabling/disabling other profiles.
-  * `2` - a secondary context. Think of a secondary context as a state that takes place within another context or can span multiple primary contexts like headphones plugged in, specific apps being open, or night time. Secondary contexts often change just a few settings like going into do not disturb mode when in a meeting.
+  * `1` - a primary context (default). Think of a primary context as a place like home, work, car, etc. Primary contexts often contain multiple settings changes and possibly running other tasks or enabling/disabling other profiles. Only one primary context can be active at a time.
+  * `2` - a secondary context. Think of a secondary context as a state that takes place within another context or can span multiple primary contexts like headphones plugged in, specific apps being open, or night time. Secondary contexts often change just a few settings like going into do not disturb mode when in a meeting. Multiple secondary contexts can be active at a time.
 * `priority` - to determine what context(s) take priority when multiple are active
   * An integer from `0` to `100`
   * The default is `50`
@@ -89,6 +92,12 @@ The configuration files each contain a single JSON object with the following pro
 * `displayBrightness` - change the display brightness
   * An integer from `0` to `255`
   * `"auto"` will restore auto brightness
+* `hapticFeedbackOn` - turns haptic feedback on or off
+  * `true` - turns haptic feedback on
+  * `false` - turns haptic feedback off
+* `batterySaverOn` - turns battery saver on or off
+  * `true` - turns battery saver on
+  * `false` - turns battery saver off
 * `enter` - profiles to enable/disable and tasks to run when the context is activated
   * An object containing any of the following properties
     * `profilesToDisable` - an array of profile names to disable: `["ProfileName1", "ProfileName2"]`
@@ -108,10 +117,18 @@ The framework just uses a single profile to handle context changes:
 
 **ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
 
+**Night-Example** - An example time-based context.
+
+**Headphones-Example** - An example context that is active when a headset is plugged in.
+
+**MediaOverride-Example** - An example context that creates its own configuration file with the current media volume when it is changed.
+
 # Tasks
 The following tasks are included in the framework:
 
 **Setup** - guides the user through setting up some variables that will be used by the framework
+
+**ConfigCreator** - guides the user through creating and editing configuration files without the need for a computer or text editor
 
 **AddToContext** - a task you call when a context becomes active with the context name as the first parameter
 
@@ -125,9 +142,15 @@ The following tasks are included in the framework:
 
 **DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
 
+**DisplayBrightness** - a helper task to change the brightness setting or enable auto-brightness (brightness level can't be changed via JavaScript)
+
+**TouchVibrations** - a helper task to turn on/off haptic feedback (can't be done via JavaScript)
+
+**BatterySaver** - a helper task to turn on/off battery saver (can't be done via JavaScript)
+
 
 # Installation and Configuration
-The easy way is to head to the [releases](https://github.com/jhotmann/tasker-phone-modes/releases) page and use the Taskernet url for the project to install. If you'd like to install manually you can do the following steps:
+The easy way is to head to use the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install. But if you'd like to install manually you can do the following steps:
 
 1. ### Import Modes.prj.xml into Tasker
     Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
@@ -138,7 +161,7 @@ The easy way is to head to the [releases](https://github.com/jhotmann/tasker-pho
     Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
 
 1. ### Customize config files
-    As of version `1.1.0` there is a `ConfigCreator` task that can be used to quickly create or edit a configuration. It uses a series of dialogs to guide you through all the configuration optoins.
+    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage or edited to use a series of dialogs to guide you through all the configuration options.
     
     If you'd like to create configuration files manually, the base.json file can be used as a template. I have also included several of my config files as
     examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
@@ -161,6 +184,8 @@ The easy way is to head to the [releases](https://github.com/jhotmann/tasker-pho
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
+  "hapticFeedbackOn": "null or boolean",
+  "batterySaverOn": "null or boolean",
   "enter": {
     "profilesToDisable": ["NameOfProfile1", "NameOfProfile2", "..."],
     "profilesToEnable": ["NameOfProfile3", "NameOfProfile4", "..."],
@@ -210,7 +235,8 @@ I have a primary context named `home` that is activated when I'm connected to my
   "bluetoothOn": true,
   "screenRotationOn": false,
   "displayTimeout": 1,
-  "displayBrightness": "auto"
+  "displayBrightness": "auto",
+  "hapticFeedbackOn": true
 }
 ```
 
@@ -228,6 +254,7 @@ I have another primary context named `car` that is activated when I'm connected 
   "screenRotationOn": true,
   "displayTimeout": 5,
   "displayBrightness": "auto",
+  "hapticFeedbackOn": true,
   "enter": {
     "tasksToRun": [{
       "name": "CarMode",
@@ -260,6 +287,7 @@ I like to just have my phone vibrate when I'm at my office so I also have a `wor
   "screenRotationOn": false,
   "displayTimeout": 1,
   "displayBrightness": "auto",
+  "hapticFeedbackOn": true,
   "enter": {
     "profilesToEnable": ["Work App Hider"]
   },
@@ -281,11 +309,12 @@ My last primary context is `other` and it is set as my `%Modes_DefaultContext`, 
   "wifiOn": true,
   "screenRotationOn": false,
   "displayTimeout": 1,
-  "displayBrightness": "auto"
+  "displayBrightness": "auto",
+  "hapticFeedbackOn": true
 }
 ```
 
-Now on to my `secondary` contexts. First is `night` which turns on from 11pm until my first alarm. It enables priority-only notifications and calls a task named `NightMode` which turns off touch vibrations, lowers auto brightness, and gets my next alarm's time so night mode will turn off when my alarm goes off. On exit, I restore my settings for touch vibrations and auto brightness (changing those setting requires root and so I don't include them in the framework) and enable a profile named `ExitNightMode` that will present me with helpful information about my day the first time I unlock my phone.
+Now on to my `secondary` contexts. First is `night` which turns on from 11pm until my first alarm. It enables priority-only notifications and calls a task named `NightMode` which gets my next alarm's time so night mode will turn off when my alarm goes off and enables the Twilight app. On exit, I enable a profile named `ExitNightMode` that will present me with helpful information about my day the first time I unlock my phone and disable TwilightMode.
 
 *Note that night mode has a priority of 50 and will take precedence over all primary contexts except for car. I did this in case I'm driving home late because otherwise night mode would mute my music.*
 
@@ -297,6 +326,7 @@ Now on to my `secondary` contexts. First is `night` which turns on from 11pm unt
   "volume_media": 0,
   "dnd": "priority",
   "displayBrightness": 5,
+  "hapticFeedbackOn": false,
   "enter": {
     "tasksToRun": [{
       "name": "NightMode",
@@ -308,29 +338,40 @@ Now on to my `secondary` contexts. First is `night` which turns on from 11pm unt
   "exit": {
     "profilesToEnable": ["ExitNightMode"],
     "tasksToRun": [{
-      "name": "TouchVibrations",
+      "name": "TwilightMode",
       "priority": 10,
-      "param1": "on",
-      "param2": ""
-    }, {
-      "name": "AutoBrightnessPercent",
-      "priority": 10,
-      "param1": "45",
+      "param1": "off",
       "param2": ""
     }]
   }
 }
 ```
 
-The rest of my `secondary` contexts are very basic and just change a setting or two.
-
 `earbuds.json` - when headphones are plugged in or connected to Bluetooth earbuds
+
+*You will notice that both earbuds and music contexts enable a profile named `MediaOverride`. This profile will activate whenever the media volume is manually changed and save a configuration file with the current media volume. This profile is useful because without this profile if your context changes (for example you leave your house), the media volume would be returned to the default value for the earbuds or music configuration. It is important that if you use this profile that when the context that enables the profile is removed, you should also remove the `mediaoverride` context. I have included an example profile in the project.*
 
 ```json
 {
   "type": 2,
   "priority": 80,
-  "volume_media": 5
+  "volume_media": 5,
+  "enter": {
+    "profilesToEnable": ["MediaOverride"]
+  },
+  "exit": {
+    "profilesToDisable": ["MediaOverride"]
+  }
+}
+```
+
+The `MediaOverride` profile writes a configuration file that looks like this:
+
+```json
+{
+  "type": 2,
+  "priority": 81,
+  "volume_media": %VOLM
 }
 ```
 
@@ -340,11 +381,19 @@ The rest of my `secondary` contexts are very basic and just change a setting or 
 {
   "type": 2,
   "priority": 55,
-  "volume_media": 15
+  "volume_media": 15,
+  "enter": {
+    "profilesToEnable": ["MediaOverride"]
+  },
+  "exit": {
+    "profilesToDisable": ["MediaOverride"]
+  }
 }
 ```
 
-`silent.json` - when in a work calendar event is active or at church or a movie theater (wifi near).
+The rest of my `secondary` contexts are very basic and just change a setting or two.
+
+`silent.json` - when a work calendar event is active or at church or a movie theater (wifi near).
 
 ```json
 {
@@ -369,7 +418,7 @@ The rest of my `secondary` contexts are very basic and just change a setting or 
 How contexts are changed is entirely dependent on your personal setup, so you are free to add/remove contexts however you see fit. If you want to use network location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app being open because you don't have a bluetooth stereo, go for it.
 
 # Upgrading From Version 0.0.1
-In version `0.0.1` there was just a single mode active at one time and the `%PHONEMODE` variable just contained a single context. Since version `1.0.0` introduces the ability to have multiple contexts active at once, you'll need to change how any profiles/tasks activate and inactivate contexts. In addition the names of the global variables have been updated to ensure uniqueness. Follow the following steps to upgrade to the new version:
+In version `0.0.1` there was just a single mode active at one time and the `%PHONEMODE` variable just contained a single context. Since version `1.0.0+` introduces the ability to have multiple contexts active at once, you'll need to change how any profiles/tasks activate and inactivate contexts. In addition the names of the global variables have been updated to ensure uniqueness. Follow the following steps to upgrade to the new version:
 
 1. Delete the existing Modes project in Tasker
 
