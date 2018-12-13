@@ -241,6 +241,7 @@
                 <h5 class="card-title">Other</h5>
                 <p class="card-text">
                   <p>Turn on/off other settings.</p>
+                  <p class="font-italic">Note: requires you to grant Tasker WRITE_SECURE_SETTINGS permission</p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="hapticCheck1" id="hapticCheck1">
                     <label class="form-check-label" for="hapticCheck1">Turn haptic feedback on/off</label>
@@ -370,6 +371,7 @@
       $("#notifVolCheck1").change(function() {
         if(this.checked) {
           $("#notifVolInput").prop("disabled", false);
+          $("#notifVolInput").select();
         } else {
           $("#notifVolInput").prop("disabled", true);
         }
@@ -377,6 +379,7 @@
       $("#mediaVolCheck1").change(function() {
         if(this.checked) {
           $("#mediaVolInput").prop("disabled", false);
+          $("#mediaVolInput").select();
         } else {
           $("#mediaVolInput").prop("disabled", true);
         }
@@ -426,6 +429,7 @@
       $("#timeoutCheck1").change(function() {
         if(this.checked) {
           $("#timeoutInput").prop("disabled", false);
+          $("#timeoutInput").select();
         } else {
           $("#timeoutInput").prop("disabled", true);
         }
@@ -433,6 +437,7 @@
       $("#brightnessCheck1").change(function() {
         if(this.checked) {
           $("#brightnessInput").prop("disabled", false);
+          $("#brightnessInput").select();
         } else {
           $("#brightnessInput").prop("disabled", true);
         }
@@ -454,6 +459,7 @@
       $("#epeCheck1").change(function() {
         if(this.checked) {
           $("#epeInput").prop("disabled", false);
+          $("#epeInput").select();
         } else {
           $("#epeInput").prop("disabled", true);
         }
@@ -461,6 +467,7 @@
       $("#epdCheck1").change(function() {
         if(this.checked) {
           $("#epdInput").prop("disabled", false);
+          $("#epdInput").select();
         } else {
           $("#epdInput").prop("disabled", true);
         }
@@ -468,6 +475,7 @@
       $("#etCheck1").change(function() {
         if(this.checked) {
           $("#etInput").prop("disabled", false);
+          $("#etInput").select();
         } else {
           $("#etInput").prop("disabled", true);
         }
@@ -475,6 +483,7 @@
       $("#xpeCheck1").change(function() {
         if(this.checked) {
           $("#xpeInput").prop("disabled", false);
+          $("#xpeInput").select();
         } else {
           $("#xpeInput").prop("disabled", true);
         }
@@ -482,6 +491,7 @@
       $("#xpdCheck1").change(function() {
         if(this.checked) {
           $("#xpdInput").prop("disabled", false);
+          $("#xpdInput").select();
         } else {
           $("#xpdInput").prop("disabled", true);
         }
@@ -489,6 +499,7 @@
       $("#xtCheck1").change(function() {
         if(this.checked) {
           $("#xtInput").prop("disabled", false);
+          $("#xtInput").select();
         } else {
           $("#xtInput").prop("disabled", true);
         }
@@ -528,6 +539,36 @@
         let batteryObj = formObj.find(o => { return (o.name === "batteryRadio"); });
         if (batteryObj !== undefined) configObj.batterySaverOn = (batteryObj.value === "true" ? true : false);
         // TODO enter/exit profiles and tasks
+        let epeObj = formObj.find(o => { return (o.name === "epeInput"); });
+        if (epeObj !== undefined) {
+          if (!configObj.enter) configObj.enter = {};
+          configObj.enter.profilesToEnable = profileParser(epeObj.value);
+        }
+        let epdObj = formObj.find(o => { return (o.name === "epdInput"); });
+        if (epdObj !== undefined) {
+          if (!configObj.enter) configObj.enter = {};
+          configObj.enter.profilesToDisable = profileParser(epdObj.value);
+        }
+        let etObj = formObj.find(o => { return (o.name === "etInput"); });
+        if (etObj !== undefined) {
+          if (!configObj.enter) configObj.enter = {};
+          configObj.enter.tasksToRun = taskParser(etObj.value);
+        }
+        let xpeObj = formObj.find(o => { return (o.name === "xpeInput"); });
+        if (xpeObj !== undefined) {
+          if (!configObj.exit) configObj.exit = {};
+          configObj.exit.profilesToEnable = profileParser(xpeObj.value);
+        }
+        let xpdObj = formObj.find(o => { return (o.name === "xpdInput"); });
+        if (xpdObj !== undefined) {
+          if (!configObj.exit) configObj.exit = {};
+          configObj.exit.profilesToDisable = profileParser(xpdObj.value);
+        }
+        let xtObj = formObj.find(o => { return (o.name === "xtInput"); });
+        if (xtObj !== undefined) {
+          if (!configObj.exit) configObj.exit = {};
+          configObj.exit.tasksToRun = taskParser(xtObj.value);
+        }
         console.dir(configObj);
         CONFIG_NAME = formObj.find(o => { return (o.name === "nameInput"); }).value || "config";
         GENERATED_CONFIG = JSON.stringify(configObj, null, 2);
@@ -545,8 +586,25 @@
         form.addEventListener("submit", processForm);
       }
 
-      function downloadConfig() {
-        // TODO
+      function profileParser(input) {
+        return input.split(',')
+                    .map(p => { return p.trim(); })
+                    .filter(p => { return (p !== ''); });
+      }
+
+      function taskParser(input) {
+        return input.split(',')
+                    .map(t => {
+                      let o = {};
+                      let parts = t.split('|');
+                      if (parts[0].trim() === '') return '';
+                      o.name = parts[0].trim();
+                      let priority = parts[1] || '10';
+                      o.priority = parseInt(priority);
+                      o.param1 = parts[2] || '';
+                      o.param2 = parts[3] || '';
+                      return o;
+                    }).filter(t => { return (t !== ''); });
       }
     </script>
   </body>
