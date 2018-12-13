@@ -11,13 +11,25 @@
     <title>Config Creator</title>
   </head>
   <body>
-    <div class="container" id="container">
+    <div class="container" id="container" style="padding-bottom: 75px;">
       <h1 style="padding-top:20px;padding-bottom:20px;">Configuration Creator</h1>
       <form id="config-form">
         <div class="row">
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Name</h5>
+                <p class="card-text">
+                  <p>The name of the configuration file should match the name of the context in Tasker. So if you have a 'home' context in Tasker, your configuration file should be named 'home' as well.</p>
+                  <input class="form-control" name="nameInput" id="nameInput" placeholder="Enter the context name">
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Type</h5>
                 <p class="card-text">
@@ -36,7 +48,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Priority</h5>
                 <p class="card-text">
@@ -48,7 +60,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Volumes</h5>
                 <p class="card-text">
@@ -69,7 +81,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Do Not Disturb</h5>
                 <p class="card-text">
@@ -102,7 +114,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Location</h5>
                 <p class="card-text">
@@ -136,7 +148,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Radios</h5>
                 <p class="card-text">
@@ -189,7 +201,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Display</h5>
                 <p class="card-text">
@@ -224,7 +236,7 @@
           </div>
 
           <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Other</h5>
                 <p class="card-text">
@@ -262,9 +274,88 @@
             </div>
           </div>
 
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Enter</h5>
+                <p class="card-text">
+                  <p>Enable/disable profiles and run tasks when the context becomes active.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="epeCheck1" id="epeCheck1">
+                    <label class="form-check-label" for="epeCheck1">Enable profiles on enter</label>
+                    <input class="form-control" name="epeInput" id="epeInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="epdCheck1" id="epdCheck1">
+                    <label class="form-check-label" for="epdCheck1">Disable profiles on enter</label>
+                    <input class="form-control" name="epdInput" id="epdInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="etCheck1" id="etCheck1">
+                    <label class="form-check-label" for="etCheck1">Run tasks on enter</label>
+                    <input class="form-control" name="etInput" id="etInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Exit</h5>
+                <p class="card-text">
+                  <p>Enable/disable profiles and run tasks when the context becomes inactive.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="xpeCheck1" id="xpeCheck1">
+                    <label class="form-check-label" for="xpeCheck1">Enable profiles on exit</label>
+                    <input class="form-control" name="xpeInput" id="xpeInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="xpdCheck1" id="xpdCheck1">
+                    <label class="form-check-label" for="xpdCheck1">Disable profiles on exit</label>
+                    <input class="form-control" name="xpdInput" id="xpdInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="xtCheck1" id="xtCheck1">
+                    <label class="form-check-label" for="xtCheck1">Run tasks on exit</label>
+                    <input class="form-control" name="xtInput" id="xtInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <button class="btn btn-primary" type="submit">Generate Config</button>
+
+        <nav class="navbar fixed-bottom navbar-light bg-light">
+          <div class="container">
+            <button class="btn btn-primary" type="submit">Generate Config</button>
+          </div>
+        </nav>
       </form>
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="code-modal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Generated Configuration</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><pre><code id="config-code"></code></pre></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <!--<button type="button" class="btn btn-primary">Download</button>-->
+              <a class="btn btn-primary" role="button" id="download-button">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Optional JavaScript -->
@@ -273,6 +364,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script>
+      var GENERATED_CONFIG;
+      var CONFIG_NAME;
+      
       $("#notifVolCheck1").change(function() {
         if(this.checked) {
           $("#notifVolInput").prop("disabled", false);
@@ -357,19 +451,90 @@
           $("#batteryFieldset").prop("disabled", true);
         }
       });
+      $("#epeCheck1").change(function() {
+        if(this.checked) {
+          $("#epeInput").prop("disabled", false);
+        } else {
+          $("#epeInput").prop("disabled", true);
+        }
+      });
+      $("#epdCheck1").change(function() {
+        if(this.checked) {
+          $("#epdInput").prop("disabled", false);
+        } else {
+          $("#epdInput").prop("disabled", true);
+        }
+      });
+      $("#etCheck1").change(function() {
+        if(this.checked) {
+          $("#etInput").prop("disabled", false);
+        } else {
+          $("#etInput").prop("disabled", true);
+        }
+      });
+      $("#xpeCheck1").change(function() {
+        if(this.checked) {
+          $("#xpeInput").prop("disabled", false);
+        } else {
+          $("#xpeInput").prop("disabled", true);
+        }
+      });
+      $("#xpdCheck1").change(function() {
+        if(this.checked) {
+          $("#xpdInput").prop("disabled", false);
+        } else {
+          $("#xpdInput").prop("disabled", true);
+        }
+      });
+      $("#xtCheck1").change(function() {
+        if(this.checked) {
+          $("#xtInput").prop("disabled", false);
+        } else {
+          $("#xtInput").prop("disabled", true);
+        }
+      });
 
 
       function processForm(e) {
         if (e.preventDefault) e.preventDefault();
-        var formObj = $("#config-form :input").serializeArray();
+        let formObj = $("#config-form :input").serializeArray();
         console.dir(formObj);
-        var configObj = {};
+        let configObj = {};
         configObj.type = parseInt(formObj.find(o => { return (o.name === "typeRadios"); }).value);
-        var priority = formObj.find(o => { return (o.name === "priorityInput"); }).value || 50;
+        let priority = formObj.find(o => { return (o.name === "priorityInput"); }).value || 50;
         configObj.priority = parseInt(priority);
-        var notifVolObj = formObj.find(o => { return (o.name === "notifVolInput"); });
-        if (notifVolObj !== undefined && notifVolObj.value !== "" && Number.isInteger(parseInt(notifVolObj.value))) configObj.volume_notification = parseInt(notifVolObj.value);
+        let notifVolObj = formObj.find(o => { return (o.name === "notifVolInput"); });
+        if (notifVolObj !== undefined && Number.isInteger(parseInt(notifVolObj.value))) configObj.volume_notification = parseInt(notifVolObj.value);
+        let mediaVolObj = formObj.find(o => { return (o.name === "mediaVolInput"); });
+        if (mediaVolObj !== undefined && Number.isInteger(parseInt(mediaVolObj.value))) configObj.volume_media = parseInt(mediaVolObj.value);
+        let dndObj = formObj.find(o => { return (o.name === "dndRadios"); });
+        if (dndObj !== undefined) configObj.dnd = dndObj.value;
+        let locationObj = formObj.find(o => { return (o.name === "locationRadios"); });
+        if (locationObj !== undefined) configObj.location = locationObj.value;
+        let wifiObj = formObj.find(o => { return (o.name === "wifiRadio"); });
+        if (wifiObj !== undefined) configObj.wifiOn = (wifiObj.value === "true" ? true : false);
+        let bluetoothObj = formObj.find(o => { return (o.name === "bluetoothRadio"); });
+        if (bluetoothObj !== undefined) configObj.bluetoothOn = (bluetoothObj.value === "true" ? true : false);
+        let airplaneObj = formObj.find(o => { return (o.name === "airplaneRadio"); });
+        if (airplaneObj !== undefined) configObj.airplaneModeOn = (airplaneObj.value === "true" ? true : false);
+        let rotationObj = formObj.find(o => { return (o.name === "rotationRadio"); });
+        if (rotationObj !== undefined) configObj.screenRotationOn = (rotationObj.value === "true" ? true : false);
+        let timeoutObj = formObj.find(o => { return (o.name === "timeoutInput"); });
+        if (timeoutObj !== undefined && Number.isInteger(parseInt(timeoutObj.value))) configObj.displayTimeout = parseInt(timeoutObj.value);
+        let brightnessObj = formObj.find(o => { return (o.name === "brightnessInput"); });
+        if (brightnessObj !== undefined && Number.isInteger(parseInt(brightnessObj.value))) configObj.displayBrightness = parseInt(brightnessObj.value);
+        let hapticObj = formObj.find(o => { return (o.name === "hapticRadio"); });
+        if (hapticObj !== undefined) configObj.hapticFeedbackOn = (hapticObj.value === "true" ? true : false);
+        let batteryObj = formObj.find(o => { return (o.name === "batteryRadio"); });
+        if (batteryObj !== undefined) configObj.batterySaverOn = (batteryObj.value === "true" ? true : false);
+        // TODO enter/exit profiles and tasks
         console.dir(configObj);
+        CONFIG_NAME = formObj.find(o => { return (o.name === "nameInput"); }).value || "config";
+        GENERATED_CONFIG = JSON.stringify(configObj, null, 2);
+        $("#config-code").text(GENERATED_CONFIG);
+        $("#download-button").attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(GENERATED_CONFIG));
+        $("#download-button").attr('download', CONFIG_NAME + ".json");
+        $("#code-modal").modal();
         return false;
       }
 
@@ -378,6 +543,10 @@
         form.attachEvent("submit", processForm);
       } else {
         form.addEventListener("submit", processForm);
+      }
+
+      function downloadConfig() {
+        // TODO
       }
     </script>
   </body>
