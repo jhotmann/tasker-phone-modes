@@ -22,7 +22,7 @@
                 <h5 class="card-title">Name</h5>
                 <p class="card-text">
                   <p>The name of the configuration file should match the name of the context in Tasker. So if you have a 'home' context in Tasker, your configuration file should be named 'home' as well.</p>
-                  <input class="form-control" name="nameInput" id="nameInput" placeholder="Enter the context name">
+                  <input type="text" autocapitalize="none" class="form-control" name="nameInput" id="nameInput" placeholder="Enter the context name">
                 </p>
               </div>
             </div>
@@ -53,7 +53,7 @@
                 <h5 class="card-title">Priority</h5>
                 <p class="card-text">
                   <p>The highest priority primary context will be active and any secondary context with equal or higher priority will be active. Use this value to make certain contexts take precedence over other contexts.</p>
-                  <input class="form-control" name="priorityInput" id="priorityInput" placeholder="Enter a number 1 to 100">
+                  <input type="number" class="form-control" name="priorityInput" id="priorityInput" placeholder="Enter a number 1 to 100">
                 </p>
               </div>
             </div>
@@ -68,12 +68,12 @@
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="notifVolCheck1" id="notifVolCheck1">
                     <label class="form-check-label" for="notifVolCheck1">Change notification volume</label>
-                    <input class="form-control" name="notifVolInput" id="notifVolInput" placeholder="Enter a number 0 to 7" disabled>
+                    <input type="number" class="form-control" name="notifVolInput" id="notifVolInput" placeholder="Enter a number 0 to 7" disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="mediaVolCheck1" id="mediaVolCheck1">
                     <label class="form-check-label" for="mediaVolCheck1">Change media volume</label>
-                    <input class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 to 15" disabled>
+                    <input type="number" class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 to 15" disabled>
                   </p>
                 </p>
               </div>
@@ -223,12 +223,12 @@
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="timeoutCheck1" id="timeoutCheck1">
                     <label class="form-check-label" for="timeoutCheck1">Change display timeout (minutes)</label>
-                    <input class="form-control" name="timeoutInput" id="timeoutInput" placeholder="Enter a number 1 or higher" disabled>
+                    <input type="number" class="form-control" name="timeoutInput" id="timeoutInput" placeholder="Enter a number 1 or higher" disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="brightnessCheck1" id="brightnessCheck1">
                     <label class="form-check-label" for="brightnessCheck1">Change display brightness</label>
-                    <input class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
                   </p>
                 </p>
               </div>
@@ -284,17 +284,17 @@
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="epeCheck1" id="epeCheck1">
                     <label class="form-check-label" for="epeCheck1">Enable profiles on enter</label>
-                    <input class="form-control" name="epeInput" id="epeInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="epeInput" id="epeInput" placeholder="ProfileName1,ProfileName2..." disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="epdCheck1" id="epdCheck1">
                     <label class="form-check-label" for="epdCheck1">Disable profiles on enter</label>
-                    <input class="form-control" name="epdInput" id="epdInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="epdInput" id="epdInput" placeholder="ProfileName1,ProfileName2..." disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="etCheck1" id="etCheck1">
                     <label class="form-check-label" for="etCheck1">Run tasks on enter</label>
-                    <input class="form-control" name="etInput" id="etInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="etInput" id="etInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
                   </p>
                 </p>
               </div>
@@ -310,17 +310,17 @@
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="xpeCheck1" id="xpeCheck1">
                     <label class="form-check-label" for="xpeCheck1">Enable profiles on exit</label>
-                    <input class="form-control" name="xpeInput" id="xpeInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="xpeInput" id="xpeInput" placeholder="ProfileName1,ProfileName2..." disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="xpdCheck1" id="xpdCheck1">
                     <label class="form-check-label" for="xpdCheck1">Disable profiles on exit</label>
-                    <input class="form-control" name="xpdInput" id="xpdInput" placeholder="ProfileName1,ProfileName2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="xpdInput" id="xpdInput" placeholder="ProfileName1,ProfileName2..." disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="xtCheck1" id="xtCheck1">
                     <label class="form-check-label" for="xtCheck1">Run tasks on exit</label>
-                    <input class="form-control" name="xtInput" id="xtInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
+                    <input type="text" autocapitalize="none" class="form-control" name="xtInput" id="xtInput" placeholder="Name1|Priority|Param1|Param2,Name2..." disabled>
                   </p>
                 </p>
               </div>
