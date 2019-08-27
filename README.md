@@ -9,7 +9,7 @@ profiles and quickly get automating.
 
 See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
-[Installation and Configuration](#installation-and-configuration)  
+[Installation and Configuration (and upgrades)](#installation-and-configuration)  
 [Configuration Spec](#configuration-spec)  
 [Examples](#examples)
 
@@ -59,6 +59,8 @@ Out of the box the following settings changes are supported:
 1. ### Import Modes.prj.xml into Tasker
     **The easy way to install is to head to the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** If you'd like to install the project manually, long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
     Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
+
+    The same Taskernet url can be used for **upgrades**. Select `Import`, then `YES` on the resulting Import dialog, then `YES` when asked to overwrite the existing `Modes` project, let Tasker do its import process, you can select `NO` or `OK` on the Missing Permissions dialog, select `NO` when asked to enable all profiles, and lastly select `YES` when asked if you want to run the Setup task.
 
 1. ### Run Setup task
     If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates.
