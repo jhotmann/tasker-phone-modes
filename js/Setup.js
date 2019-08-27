@@ -18,3 +18,4 @@ var cfu = confirm('Would you like to periodically check for project updates?');
 enableProfile('CheckForModesUpdate', cfu);
 
 enableProfile('ContextChanged', true);
+enableProfile('MonitorStart', true);

@@ -66,9 +66,10 @@
 	<Profile sr="prof51" ve="2">
 		<cdate>1545541948475</cdate>
 		<clp>true</clp>
-		<edate>1566888049881</edate>
+		<edate>1566934753396</edate>
 		<id>51</id>
 		<mid0>52</mid0>
+		<nme>MonitorStart</nme>
 		<pri>50</pri>
 		<Event sr="con0" ve="2">
 			<code>307</code>
@@ -94,8 +95,8 @@
 	<Project sr="proj0" ve="2">
 		<cdate>1469483841722</cdate>
 		<name>Modes</name>
-		<pids>144,51,55,130,128,114</pids>
-		<tids>112,56,9,138,34,115,143,140,57,39,137,113,52,20,18,82,13,129</tids>
+		<pids>144,128,130,55,51,114</pids>
+		<tids>129,138,115,113,112,13,143,137,56,18,57,20,140,82,9,34,39,52</tids>
 		<Share sr="Share">
 			<d>Modes - A contextual settings framework to streamline the process of changing settings based on your current situation.
 
@@ -164,10 +165,10 @@ if (index &gt; -1) {
 	</Task>
 	<Task sr="task115">
 		<cdate>1543411345625</cdate>
-		<edate>1566893556669</edate>
+		<edate>1566934914193</edate>
 		<id>115</id>
 		<nme>ContextChanged</nme>
-		<pri>6</pri>
+		<pri>100</pri>
 		<rty>1</rty>
 		<stayawake>true</stayawake>
 		<Action sr="act0" ve="7">
@@ -180,7 +181,7 @@ if (index &gt; -1) {
 		</Action>
 		<Action sr="act1" ve="7">
 			<code>129</code>
-			<Str sr="arg0" ve="3">let version = '1.4.0';
+			<Str sr="arg0" ve="3">let version = '1.4.1';
 setGlobal('Modes_Version', version);
 
 let configPath = global('Modes_ConfigPath');
@@ -682,7 +683,7 @@ The size of the response in bytes&lt;/_array_net.dinglisch.android.tasker.RELEVA
 	</Task>
 	<Task sr="task18">
 		<cdate>1543968812849</cdate>
-		<edate>1566893473140</edate>
+		<edate>1566932891237</edate>
 		<id>18</id>
 		<nme>ConfigCreator</nme>
 		<pri>100</pri>
@@ -698,7 +699,7 @@ The size of the response in bytes&lt;/_array_net.dinglisch.android.tasker.RELEVA
 	</Task>
 	<Task sr="task20">
 		<cdate>1471285453782</cdate>
-		<edate>1566930345503</edate>
+		<edate>1566934811248</edate>
 		<id>20</id>
 		<nme>Setup</nme>
 		<pri>100</pri>
@@ -719,7 +720,8 @@ if (dc != null) {
 var cfu = confirm('Would you like to periodically check for project updates?');
 enableProfile('CheckForModesUpdate', cfu);
 
-enableProfile('ContextChanged', true);</Str>
+enableProfile('ContextChanged', true);
+enableProfile('MonitorStart', true);</Str>
 			<Str sr="arg1" ve="3"/>
 			<Int sr="arg2" val="1"/>
 			<Int sr="arg3" val="45"/>

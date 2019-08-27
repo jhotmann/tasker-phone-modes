@@ -402,7 +402,7 @@ The framework just uses a single profile to handle context changes:
 
 **MediaOverride-Example** - An example context that creates its own configuration file with the current media volume when it is changed.
 
-**Monitor Start** - Clears out the `%Modes_Context%` variable when tasker monitoring begins. It is launched with the highest possible task priority to ensure it runs first after a reboot or if Tasker monitoring is stopped and then started back up. This ensures that when any profiles become active, they don't add duplicate modes to the context.
+**MonitorStart** - Clears out the `%Modes_Context%` variable when tasker monitoring begins. It is launched with the highest possible task priority to ensure it runs first after a reboot or if Tasker monitoring is stopped and then started back up. This ensures that when any profiles become active, they don't add duplicate modes to the context.
 
 **CheckForModesUpdate** - Checks for updates to the project every Monday and Friday at noon.
 
