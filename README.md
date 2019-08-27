@@ -49,6 +49,28 @@ Out of the box the following settings changes are supported:
 
     When you use normal profiles and tasks to change settings dependent on your situation, you either have to create one giant task with a lot of `if` statements in it, or each profile has a task with a lot of the same steps repeated in them. With this framework you can change a bunch of settings without creating any extra tasks and all the logic is written in JavaScript which is a lot easier to work with than Tasker's.
 
+
+# Installation and Configuration
+**The easy way to install is to head to use the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** But if you'd like to install manually you can do the following steps:
+
+1. ### Import Modes.prj.xml into Tasker
+    Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
+    Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
+
+1. ### Run Setup task
+    If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates.
+
+1. ### Customize config files
+    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage so you don't need to bookmark the URL.
+
+1. ### Create profiles and tasks to change the current context
+
+    Create profiles and tasks *outside of the Modes project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/disactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
+
+    To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to deactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
+
+    *See the [Examples](#examples) section for my real world configuration files and profiles.*
+
 # Configuration Spec
 The configuration files each contain a single JSON object with the following properties. All properties are optional and a few have default values if they are not specified. If you omit a property that doesn't have a default value from your configuration, that setting will remain unchanged.
 
@@ -110,62 +132,7 @@ The configuration files each contain a single JSON object with the following pro
 * `exit` - profiles to enable/disable and tasks to run when the context is removed
   * An object containing the same properties as `enter`
 
-See the [Examples](#examples) section for my real world configuration files.
-
-# Profiles
-The framework just uses a single profile to handle context changes:
-
-**ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
-
-**Night-Example** - An example time-based context.
-
-**Headphones-Example** - An example context that is active when a headset is plugged in.
-
-**MediaOverride-Example** - An example context that creates its own configuration file with the current media volume when it is changed.
-
-**Monitor Start** - Clears out the `%Modes_Context%` variable when tasker monitoring begins. It is launched with the highest possible task priority to ensure it runs first after a reboot or if Tasker monitoring is stopped and then started back up. This ensures that when any profiles become active, they don't add duplicate modes to the context.
-
-# Tasks
-The following tasks are included in the framework:
-
-**Setup** - guides the user through setting up some variables that will be used by the framework
-
-**ConfigCreator** - guides the user through creating and editing configuration files without the need for a computer or text editor
-
-**AddToContext** - a task you call when a context becomes active with the context name as the first parameter
-
-**RemoveFromContext** - a task you call when a context is no longer active with the context name as the first parameter
-
-**ContextChanged** - contains JavaScript that reads the configuration files for all active contexts (i.e. home.json) and modifies your phone settings accordingly, enables/disables any profiles specified, and executes any tasks specified in the config. Additionally, any contexts that have become inactive will have any exit tasks executed and enables/disables specified profiles.
-
-**DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript)
-
-**LocationMode** - a helper task for setting the location mode (can't be done via JavaScript)
-
-**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
-
-**DisplayBrightness** - a helper task to change the brightness setting or enable auto-brightness (brightness level can't be changed via JavaScript)
-
-**TouchVibrations** - a helper task to turn on/off haptic feedback (can't be done via JavaScript)
-
-**BatterySaver** - a helper task to turn on/off battery saver (can't be done via JavaScript)
-
-
-# Installation and Configuration
-**The easy way is to head to use the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** But if you'd like to install manually you can do the following steps:
-
-1. ### Import Modes.prj.xml into Tasker
-    Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
-    Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
-
-1. ### Run Setup task
-    Select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts.
-    Currently this just sets the %MODECONFIGPATH variable and then runs the UpdateJavascript task.
-
-1. ### Customize config files
-    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage or edited to use a series of dialogs to guide you through all the configuration options.
-    
-    If you'd like to create configuration files manually, the base.json file can be used as a template. I have also included several of my config files as
+If you'd like to create configuration files manually instead of using the [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html), the base.json file can be used as a template. I have also included several of my config files in the [config directory](https://github.com/jhotmann/tasker-phone-modes/tree/master/config) as
     examples that you can modify to your needs.  I would recommend using a computer for this. Once you are satisfied with your
     configuration, copy your config files to `/sdcard/Tasker/ModeConfigs` (which is the default, you can also specify a different location during the setup)
     and begin playing around with your different modes.
@@ -213,11 +180,6 @@ The following tasks are included in the framework:
 
 When a property is omitted, left null, or is an empty array `[]`, that setting is left unchanged. Things like `null`, `true`, `false`, and integers (`1`, `2`, `42`)
 should never have quotes around them. `"Strings"` should always use double quotes. Proper indenting is nice but optional.
-
-# Changing Contexts
-The name of the config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/disactivate contexts within a task or with a profile. I personally only use profiles to handle context changes.
-
-To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to disactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
 
 # Examples
 Here is how I use this framework to automate the settings on my phone. *Note, I store all my profiles and tasks that control phone contexts in a separate Tasker project than the Modes project. This makes updating the Modes project seamless.*
@@ -419,6 +381,53 @@ The rest of my `secondary` contexts are very basic and just change a setting or 
 
 How contexts are changed is entirely dependent on your personal setup, so you are free to add/remove contexts however you see fit. If you want to use network location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app being open because you don't have a bluetooth stereo, go for it.
 
+# Other helpful tips
+Most of my contexts are added when a profile becomes active and removed when the profile is no longer active. This makes it easy to prevent duplicate contexts appearing in `%Modes_Contexts`. But I have one instance where I stray from this. My `night` context becomes active at 11pm, but I often go to bed before this and would hate to have my phone go off with a message and prevent me from falling asleep. So I can trigger `night` mode manually with a NFC tag on my bedside table. But this means when 11pm rolls around, my night profile will become active and add a second `night` to the `%Modes_Context` list. To prevent this, I added a simple `if` statement to my `AddToContext` step in the night profile. It checks to make sure `%Modes_Context` doesn't regex match `(^|,)night($|,)`. This regular expression will match no matter if `night` is at the beginning, end, or middle of the list of contexts and therefore won't add a second one. For other contexts it may be acceptable if multiple of the same context are in the list due to multiple profiles being active and adding the same context. In that case you can safely add both and they will both be removed when their respective profiles deactivate.
+
+![Regex Match Example](ReadmeFiles/RegexMatch.png)
+
+# Profiles
+The framework just uses a single profile to handle context changes:
+
+**ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
+
+**Night-Example** - An example time-based context.
+
+**Headphones-Example** - An example context that is active when a headset is plugged in.
+
+**MediaOverride-Example** - An example context that creates its own configuration file with the current media volume when it is changed.
+
+**Monitor Start** - Clears out the `%Modes_Context%` variable when tasker monitoring begins. It is launched with the highest possible task priority to ensure it runs first after a reboot or if Tasker monitoring is stopped and then started back up. This ensures that when any profiles become active, they don't add duplicate modes to the context.
+
+**CheckForModesUpdate** - Checks for updates to the project every Monday and Friday at noon.
+
+# Tasks
+The following tasks are included in the framework:
+
+**Setup** - guides the user through setting up some variables that will be used by the framework
+
+**ConfigCreator** - launches the config creator webpage that will help you generate a configuration file without needing a text editor
+
+**AddToContext** - a task you call when a context becomes active with the context name as the first parameter
+
+**RemoveFromContext** - a task you call when a context is no longer active with the context name as the first parameter
+
+**ContextChanged** - contains JavaScript that reads the configuration files for all active contexts (i.e. home.json) and modifies your phone settings accordingly, enables/disables any profiles specified, and executes any tasks specified in the config. Additionally, any contexts that have become inactive will have any exit tasks executed and enables/disables specified profiles.
+
+**CheckForModesUpdate** - Compares the current installed version against the Github releases page to see if there is a newer version available. If there is, a notification is created that can open Taskernet to update.
+
+**DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript)
+
+**LocationMode** - a helper task for setting the location mode (can't be done via JavaScript)
+
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
+
+**DisplayBrightness** - a helper task to change the brightness setting or enable auto-brightness (brightness level can't be changed via JavaScript)
+
+**TouchVibrations** - a helper task to turn on/off haptic feedback (can't be done via JavaScript)
+
+**BatterySaver** - a helper task to turn on/off battery saver (can't be done via JavaScript)
+
 # Upgrading From Version 0.0.1
 In version `0.0.1` there was just a single mode active at one time and the `%PHONEMODE` variable just contained a single context. Since version `1.0.0+` introduces the ability to have multiple contexts active at once, you'll need to change how any profiles/tasks activate and inactivate contexts. In addition the names of the global variables have been updated to ensure uniqueness. Follow the following steps to upgrade to the new version:
 
@@ -441,8 +450,3 @@ In version `0.0.1` there was just a single mode active at one time and the `%PHO
 1. Update your configuration files with `type` and `priority` properties.
 
     Your existing configuration files will still work and will behave the exact same as they did in version `0.0.1` because they will all be primary contexts (only one active at a time) with the same priority (default of 50), and so the last context added to the `%Modes_Contexts` variable will be the active context. However you may wish to take advantage of the ability to use secondary contexts as well as priorities to make managing which context(s) are active easier.
-
-# Other helpful tips
-All of my contexts are added when a profile becomes active and removed when the profile is no longer active. This makes it easy to prevent duplicate contexts appearing in `%Modes_Contexts`. But I have one instance where I stray from this. My `night` context becomes active at 11pm, but I often go to bed before this and would hate to have my phone go off with a message and prevent me from falling asleep. So I can trigger `night` mode manually with a NFC tag on my bedside table. But this means when 11pm rolls around, my night profile will become active and add a second `night` to the `%Modes_Context` list. To prevent this, I added a simple `if` statement to my `AddToContext` step in the night profile. It checks to make sure `%Modes_Context` doesn't regex match `(^|,)night($|,)`. This regular expression will match no matter if `night` is at the beginning, end, or middle of the list of contexts and therefore won't add a second one. For other contexts it may be acceptable if multiple of the same context are in the list due to multiple profiles being active and adding the same context. In that case you can safely add both and they will both be removed when their respective profiles disactivate.
-
-![Regex Match Example](ReadmeFiles/RegexMatch.png)

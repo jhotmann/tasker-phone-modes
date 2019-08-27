@@ -14,4 +14,7 @@ if (dc != null) {
   setGlobal('Modes_DefaultContext', dc);
 }
 
+var cfu = confirm('Would you like to periodically check for project updates?');
+enableProfile('CheckForModesUpdate', cfu);
+
 enableProfile('ContextChanged', true);
