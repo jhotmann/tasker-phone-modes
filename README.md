@@ -43,7 +43,7 @@ Out of the box the following settings changes are supported:
 
 1. Configuration merging
 
-    With this framework, since multiple contexts can be active at once, your configurations for each state will be merged and the highest priority for each setting will take affect. When one of the states is disactivated, the settings are re-merged and changed accordingly. Doing this with normal profiles and tasks would be quite the challenge because you would have to write lengthy exit conditions, or a really big, nasty task to handle the changes. See the next point...
+    With this framework, since multiple contexts can be active at once, your configurations for each state will be merged and the highest priority for each setting will take affect. When one of the states is deactivated, the settings are re-merged and changed accordingly. Doing this with normal profiles and tasks would be quite the challenge because you would have to write lengthy exit conditions, or a really big, nasty task to handle the changes. See the next point...
 
 1. One task (and a few helpers) to take care of all the work
 
@@ -65,7 +65,7 @@ Out of the box the following settings changes are supported:
 
 1. ### Create profiles and tasks to change the current context
 
-    Create profiles and tasks *outside of the Modes project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/disactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
+    Create profiles and tasks *outside of the Modes project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/deactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
 
     To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to deactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
 
