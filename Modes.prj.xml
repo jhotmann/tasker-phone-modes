@@ -1,8 +1,8 @@
-<TaskerData sr="" dvi="1" tv="5.6.4b">
+<TaskerData sr="" dvi="1" tv="5.8.3">
 	<Profile sr="prof114" ve="2">
 		<cdate>1543411337077</cdate>
 		<clp>true</clp>
-		<edate>1544538316434</edate>
+		<edate>1555151237860</edate>
 		<id>114</id>
 		<mid0>115</mid0>
 		<nme>ContextChanged</nme>
@@ -17,7 +17,7 @@
 	<Profile sr="prof128" ve="2">
 		<cdate>1544301750876</cdate>
 		<clp>true</clp>
-		<edate>1544740965027</edate>
+		<edate>1566887634576</edate>
 		<id>128</id>
 		<limit>true</limit>
 		<mid0>129</mid0>
@@ -33,7 +33,7 @@
 	<Profile sr="prof130" ve="2">
 		<cdate>1485323611359</cdate>
 		<clp>true</clp>
-		<edate>1544544037798</edate>
+		<edate>1566887649154</edate>
 		<id>130</id>
 		<limit>true</limit>
 		<mid0>137</mid0>
@@ -44,10 +44,22 @@
 			<Int sr="arg0" val="0"/>
 		</State>
 	</Profile>
+	<Profile sr="prof51" ve="2">
+		<cdate>1545541948475</cdate>
+		<clp>true</clp>
+		<edate>1566887808192</edate>
+		<id>51</id>
+		<mid0>52</mid0>
+		<pri>50</pri>
+		<Event sr="con0" ve="2">
+			<code>307</code>
+			<pri>0</pri>
+		</Event>
+	</Profile>
 	<Profile sr="prof55" ve="2">
 		<cdate>1443816148810</cdate>
 		<clp>true</clp>
-		<edate>1544337685091</edate>
+		<edate>1566887657619</edate>
 		<id>55</id>
 		<limit>true</limit>
 		<mid0>56</mid0>
@@ -63,8 +75,8 @@
 	<Project sr="proj0" ve="2">
 		<cdate>1469483841722</cdate>
 		<name>Modes</name>
-		<pids>55,114,130,128</pids>
-		<tids>39,112,138,115,13,137,82,113,18,56,57,129,20,9,34,140</tids>
+		<pids>51,128,55,114,130</pids>
+		<tids>82,113,18,140,115,57,52,112,13,9,39,129,20,56,137,138,34</tids>
 		<Share sr="Share">
 			<d>Modes - A contextual settings framework to streamline the process of changing settings based on your current situation.
 
@@ -74,7 +86,7 @@ GitHub page with more details: https://github.com/jhotmann/tasker-phone-modes</d
 	</Project>
 	<Task sr="task112">
 		<cdate>1543115059459</cdate>
-		<edate>1544545368295</edate>
+		<edate>1552539024869</edate>
 		<id>112</id>
 		<nme>AddToContext</nme>
 		<pri>100</pri>
@@ -133,7 +145,7 @@ if (index &gt; -1) {
 	</Task>
 	<Task sr="task115">
 		<cdate>1543411345625</cdate>
-		<edate>1544739687099</edate>
+		<edate>1566887896614</edate>
 		<id>115</id>
 		<nme>ContextChanged</nme>
 		<pri>6</pri>
@@ -149,7 +161,7 @@ if (index &gt; -1) {
 		</Action>
 		<Action sr="act1" ve="7">
 			<code>129</code>
-			<Str sr="arg0" ve="3">let version = '1.2.0';
+			<Str sr="arg0" ve="3">let version = '1.3.0';
 setGlobal('Modes_Version', version);
 
 let configPath = global('Modes_ConfigPath');
@@ -291,7 +303,7 @@ function executeTask(name, priority, param1, param2) {
 	</Task>
 	<Task sr="task129">
 		<cdate>1544301755191</cdate>
-		<edate>1544740965027</edate>
+		<edate>1566887634576</edate>
 		<id>129</id>
 		<pri>6</pri>
 		<rty>1</rty>
@@ -394,7 +406,7 @@ setLocal('configpath', configPath.replace('/sdcard/', ''));</Str>
 	</Task>
 	<Task sr="task137">
 		<cdate>1485323616243</cdate>
-		<edate>1544301788591</edate>
+		<edate>1566887639599</edate>
 		<id>137</id>
 		<Action sr="act0" ve="7">
 			<code>130</code>
@@ -410,7 +422,7 @@ setLocal('configpath', configPath.replace('/sdcard/', ''));</Str>
 	</Task>
 	<Task sr="task138">
 		<cdate>1543422275395</cdate>
-		<edate>1544543992121</edate>
+		<edate>1566887649154</edate>
 		<id>138</id>
 		<Action sr="act0" ve="7">
 			<code>130</code>
@@ -437,7 +449,7 @@ setLocal('configpath', configPath.replace('/sdcard/', ''));</Str>
 	</Task>
 	<Task sr="task140">
 		<cdate>1544453972007</cdate>
-		<edate>1544736501994</edate>
+		<edate>1566867591339</edate>
 		<id>140</id>
 		<nme>BatterySaver</nme>
 		<Action sr="act0" ve="7">
@@ -730,7 +742,7 @@ function taskQuestions() {
 	</Task>
 	<Task sr="task20">
 		<cdate>1471285453782</cdate>
-		<edate>1544743123246</edate>
+		<edate>1555151323254</edate>
 		<id>20</id>
 		<nme>Setup</nme>
 		<pri>100</pri>
@@ -888,9 +900,21 @@ enableProfile('ContextChanged', true);</Str>
 			<nme>mw_maps_my_location</nme>
 		</Img>
 	</Task>
+	<Task sr="task52">
+		<cdate>1545541953966</cdate>
+		<edate>1566887808192</edate>
+		<id>52</id>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%Modes_Contexts</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+		</Action>
+	</Task>
 	<Task sr="task56">
 		<cdate>1443816152178</cdate>
-		<edate>1544337685091</edate>
+		<edate>1566887657619</edate>
 		<id>56</id>
 		<pri>100</pri>
 		<Action sr="act0" ve="7">

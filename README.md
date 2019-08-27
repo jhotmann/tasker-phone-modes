@@ -123,6 +123,8 @@ The framework just uses a single profile to handle context changes:
 
 **MediaOverride-Example** - An example context that creates its own configuration file with the current media volume when it is changed.
 
+**Monitor Start** - Clears out the `%Modes_Context%` variable when tasker monitoring begins. It is launched with the highest possible task priority to ensure it runs first after a reboot or if Tasker monitoring is stopped and then started back up. This ensures that when any profiles become active, they don't add duplicate modes to the context.
+
 # Tasks
 The following tasks are included in the framework:
 
@@ -150,7 +152,7 @@ The following tasks are included in the framework:
 
 
 # Installation and Configuration
-The easy way is to head to use the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install. But if you'd like to install manually you can do the following steps:
+**The easy way is to head to use the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** But if you'd like to install manually you can do the following steps:
 
 1. ### Import Modes.prj.xml into Tasker
     Long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
