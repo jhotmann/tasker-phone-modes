@@ -9,6 +9,10 @@ profiles and quickly get automating.
 
 See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
 
+[Installation and Configuration](#installation-and-configuration)  
+[Configuration Spec](#configuration-spec)  
+[Examples](#examples)
+
 # Overview
 This framework monitors a variable `%Modes_Contexts` which contains a list of your current, active contexts i.e. if you are home, if you have headphones plugged in, if you are in a work meeting, etc. These contexts are up to you to think of and manage based on your needs. The framework looks at the configuration for these contexts and based on priorities and context types will determine what your current settings should be and sets them accordingly. Also when a context becomes active or inactive you can easily run other tasks or enable/disable other profiles accordingly.
 
