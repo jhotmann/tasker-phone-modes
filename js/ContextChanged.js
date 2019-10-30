@@ -2,11 +2,11 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.4.1';
+let version = '1.5.0';
 setGlobal('Modes_Version', version);
 
-let configPath = global('Modes_ConfigPath');
-let defaultContext = global('Modes_DefaultContext');
+const CONFIG_PATH = global('Modes_ConfigPath');
+const DEFAULT_CONTEXT = global('Modes_DefaultContext');
 let contexts = global('Modes_Contexts').split(',').filter(c => { return (c !== '') });
 let previousContexts = global('Modes_ActiveContexts').split(',').filter(c => { return (c !== '') });
 
@@ -17,7 +17,7 @@ let configs = contexts.map(context => {
 
 // Determine which contexts will be activated based upon type and priority
 let activeContexts = [];
-let primaryContext = configs.filter(c => { return c.type === 1; }).sort((a, b) => { return a.priority - b.priority; }).pop() || (defaultContext && typeof defaultContext === 'string' ? readConfigFile(defaultContext) : { priority: 0 });
+let primaryContext = configs.filter(c => { return c.type === 1; }).sort((a, b) => { return a.priority - b.priority; }).pop() || (DEFAULT_CONTEXT && typeof DEFAULT_CONTEXT === 'string' ? readConfigFile(DEFAULT_CONTEXT) : { priority: 0 });
 let primaryPriority = primaryContext.priority || 0;
 activeContexts.push(primaryContext.name);
 let secondaryContexts = configs.filter(c => { return (c.type === 2 && c.priority >= primaryPriority); }).sort((a, b) => { return a.priority - b.priority; });
@@ -35,7 +35,13 @@ inactivatedContexts.forEach(contextName => {
   if (context.exit) {
     if (context.exit.profilesToDisable && Array.isArray(context.exit.profilesToDisable)) context.exit.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
     if (context.exit.profilesToEnable && Array.isArray(context.exit.profilesToEnable)) context.exit.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
-    if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => { executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2); });
+    if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => {
+      if (typeof tsk === 'string') {
+        executeTask(tsk, 10, null, null);
+      } else if (typeof tsk === 'object' && tsk.name) {
+        executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2);
+      }
+    });
   }
 });
 
@@ -73,7 +79,13 @@ configs
     if (context.enter) {
       if (context.enter.profilesToDisable && Array.isArray(context.enter.profilesToDisable)) context.enter.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
       if (context.enter.profilesToEnable && Array.isArray(context.enter.profilesToEnable)) context.enter.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
-      if (context.enter.tasksToRun && Array.isArray(context.enter.tasksToRun)) context.enter.tasksToRun.forEach(tsk => { executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2); });
+      if (context.enter.tasksToRun && Array.isArray(context.enter.tasksToRun)) context.enter.tasksToRun.forEach(tsk => {
+        if (typeof tsk === 'string') {
+          executeTask(tsk, 10, null, null);
+        } else if (typeof tsk === 'object' && tsk.name) {
+          executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2);
+        }
+      });
     }
   });
 
@@ -86,9 +98,9 @@ exit();
 function readConfigFile(configName) {
   let configText = '{}';
   try {
-    configText = readFile(configPath + '/' + configName + '.json');
+    configText = readFile(CONFIG_PATH + '/' + configName + '.json');
   } catch (error) {
-    flash('Error reading configuration file ' + configPath + '/' + configName + '.json');
+    flash('Error reading configuration file ' + CONFIG_PATH + '/' + configName + '.json');
   }
   let conf = JSON.parse(configText);
   if (!conf.name) conf.name = configName;

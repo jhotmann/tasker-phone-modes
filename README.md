@@ -60,7 +60,7 @@ Out of the box the following settings changes are supported:
     **The easy way to install is to head to the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** If you'd like to install the project manually, long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
     Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
 
-    The same Taskernet url can be used for **upgrades**. Select `Import`, then `YES` on the resulting Import dialog, then `YES` when asked to overwrite the existing `Modes` project, let Tasker do its import process, you can select `NO` or `OK` on the Missing Permissions dialog, select `NO` when asked to enable all profiles, and lastly select `YES` when asked if you want to run the Setup task.
+    The same Taskernet url can be used for **upgrades** as well. Select `Import`, then `YES` on the resulting Import dialog, then `YES` when asked to overwrite the existing `Modes` project, let Tasker do its import process, you can select `NO` or `OK` on the Missing Permissions dialog, select `NO` when asked to enable all profiles, and lastly select `YES` when asked if you want to run the Setup task even if you've run it before because it will activate the important profiles.
 
 1. ### Run Setup task
     If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates.
@@ -70,9 +70,11 @@ Out of the box the following settings changes are supported:
 
 1. ### Create profiles and tasks to change the current context
 
-    Create profiles and tasks *outside of the Modes project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is active, `home.json` is used to lookup the settings for the `home` context. You can activate/deactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
+    Create profiles and tasks *outside of the `Modes` project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is activated, `home.json` is used to lookup the settings for the `home` context. You can activate/deactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
 
     To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to deactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
+
+    There are some cases where you may not want to add another occurance of a context to the context list. For example, if you have a profile that activates the `night` context from 11pm until 6am, but you also have a NFC tag next to your bed that can activate the `night` context. If you use the NFC tag to add `night` to your context list a second instance will be added when the time profile activates. You can prevent this by adding `if-not-exist` as the second parameter of `AddToContext`. Similarly, you can use `max-count=X` as the second parameter to limit the occurances of a context in the list to the supplied number. You can also supply the second parameter `all` to `RemoveFromContext` to remove all occurances of a context from the context list.
 
     *See the [Examples](#examples) section for my real world configuration files and profiles.*
 
@@ -129,7 +131,7 @@ The configuration files each contain a single JSON object with the following pro
   * An object containing any of the following properties
     * `profilesToDisable` - an array of profile names to disable: `["ProfileName1", "ProfileName2"]`
     * `profilesToEnable` - an array of profile names to enable: `["ProfileName3", "ProfileName4"]`
-    * `tasksToRun` - an array of objects containing tasks to run and their parameters
+    * `tasksToRun` - an array of objects containing tasks to run and their parameters. *Alternately, if you don't need to pass parameters to your task, you can simply put the name(s) of the tasks in quotes inside the array, like: `["TaskName1", "TaskName2"]`*
       * `name` - the name of the task (string), example: `"TaskName1"`
       * `priority` - the task priority (integer), example" `10`
       * `param1` - the first parameter to pass to the task (string), examples: `""` or `"SomeValue"`
@@ -173,7 +175,8 @@ If you'd like to create configuration files manually instead of using the [Confi
       "priority": 10,
       "param1": "",
       "param2": ""
-    }]
+    },
+    "TaskName3"]
   },
   "exit": {
     "profilesToDisable": [],
@@ -387,7 +390,7 @@ The rest of my `secondary` contexts are very basic and just change a setting or 
 How contexts are changed is entirely dependent on your personal setup, so you are free to add/remove contexts however you see fit. If you want to use network location instead of WifiConnected, you are free to do so. If you want car mode to be triggered by headphones and a specific app being open because you don't have a bluetooth stereo, go for it.
 
 # Other helpful tips
-Most of my contexts are added when a profile becomes active and removed when the profile is no longer active. This makes it easy to prevent duplicate contexts appearing in `%Modes_Contexts`. But I have one instance where I stray from this. My `night` context becomes active at 11pm, but I often go to bed before this and would hate to have my phone go off with a message and prevent me from falling asleep. So I can trigger `night` mode manually with a NFC tag on my bedside table. But this means when 11pm rolls around, my night profile will become active and add a second `night` to the `%Modes_Context` list. To prevent this, I added a simple `if` statement to my `AddToContext` step in the night profile. It checks to make sure `%Modes_Context` doesn't regex match `(^|,)night($|,)`. This regular expression will match no matter if `night` is at the beginning, end, or middle of the list of contexts and therefore won't add a second one. For other contexts it may be acceptable if multiple of the same context are in the list due to multiple profiles being active and adding the same context. In that case you can safely add both and they will both be removed when their respective profiles deactivate.
+Most of my contexts are added when a profile becomes active and removed when the profile is no longer active. This makes it easy to prevent duplicate contexts appearing in `%Modes_Contexts`. But I have one instance where I stray from this. My `night` context becomes active at 11pm, but I often go to bed before this and would hate to have my phone go off with a message and prevent me from falling asleep. So I can trigger `night` mode manually with a NFC tag on my bedside table. But this means when 11pm rolls around, my night profile will become active and add a second `night` to the `%Modes_Context` list. ~~To prevent this, I added a simple `if` statement to my `AddToContext` step in the night profile. It checks to make sure `%Modes_Context` doesn't regex match `(^|,)night($|,)`. This regular expression will match no matter if `night` is at the beginning, end, or middle of the list of contexts and therefore won't add a second one.~~ To prevent this, simply add `if-not-exist` as the second parameter of `AddToContext`. For other contexts it may be acceptable if multiple of the same context are in the list due to multiple profiles being active and adding the same context. In that case you can safely add both and they will both be removed when their respective profiles deactivate.
 
 ![Regex Match Example](ReadmeFiles/RegexMatch.png)
 
@@ -409,29 +412,31 @@ The framework just uses a single profile to handle context changes:
 # Tasks
 The following tasks are included in the framework:
 
-**Setup** - guides the user through setting up some variables that will be used by the framework
+**Setup** - guides the user through setting up some variables that will be used by the framework.
 
-**ConfigCreator** - launches the config creator webpage that will help you generate a configuration file without needing a text editor
+**ConfigCreator** - launches the config creator webpage that will help you generate a configuration file without needing a text editor.
 
-**AddToContext** - a task you call when a context becomes active with the context name as the first parameter
+**AddToContext** - a task you call when a context becomes active with the context name as the first parameter. Optionally the second parameter can be set to `if-not-exist` or `max-count=X`.
 
-**RemoveFromContext** - a task you call when a context is no longer active with the context name as the first parameter
+**RemoveFromContext** - a task you call when a context is no longer active with the context name as the first parameter. Optionally the second parameter can be set to `all` to remove all occurrances of the context specified.
 
 **ContextChanged** - contains JavaScript that reads the configuration files for all active contexts (i.e. home.json) and modifies your phone settings accordingly, enables/disables any profiles specified, and executes any tasks specified in the config. Additionally, any contexts that have become inactive will have any exit tasks executed and enables/disables specified profiles.
 
 **CheckForModesUpdate** - Compares the current installed version against the Github releases page to see if there is a newer version available. If there is, a notification is created that can open Taskernet to update.
 
-**DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript)
+**DoNoDisturb** - a helper task for setting DND mode (can't be done via JavaScript).
 
-**LocationMode** - a helper task for setting the location mode (can't be done via JavaScript)
+**LocationMode** - a helper task for setting the location mode (can't be done via JavaScript).
 
-**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript)
+**DisplayRotate** - a helper task to turn on/off display rotation (can't be done via JavaScript).
 
-**DisplayBrightness** - a helper task to change the brightness setting or enable auto-brightness (brightness level can't be changed via JavaScript)
+**DisplayBrightness** - a helper task to change the brightness setting or enable auto-brightness (brightness level can't be changed via JavaScript).
 
-**TouchVibrations** - a helper task to turn on/off haptic feedback (can't be done via JavaScript)
+**TouchVibrations** - a helper task to turn on/off haptic feedback (can't be done via JavaScript).
 
-**BatterySaver** - a helper task to turn on/off battery saver (can't be done via JavaScript)
+**BatterySaver** - a helper task to turn on/off battery saver (can't be done via JavaScript).
+
+**EditContext** - a task that brings up a dialog with the current context(s). Call this task to manually edit the context.
 
 # Upgrading From Version 0.0.1
 In version `0.0.1` there was just a single mode active at one time and the `%PHONEMODE` variable just contained a single context. Since version `1.0.0+` introduces the ability to have multiple contexts active at once, you'll need to change how any profiles/tasks activate and inactivate contexts. In addition the names of the global variables have been updated to ensure uniqueness. Follow the following steps to upgrade to the new version:
