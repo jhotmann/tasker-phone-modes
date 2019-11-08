@@ -57,16 +57,16 @@ Out of the box the following settings changes are supported:
 # Installation and Configuration
 
 1. ### Import Modes.prj.xml into Tasker
-    **The easy way to install is to head to the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project to install.** If you'd like to install the project manually, long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your phone.
+    **The easy way to install is to head to the [Taskernet url](https://taskernet.com/shares/?user=AS35m8k7601Z2ol5UAzuT033Ll5H1yhruZrDvDITEN2l4b5o%2Fm1AF9Dpj3WrfO36Pgh2&id=Project%3AModes) for the project on your Android device to install.** If you'd like to install the project manually, long press (or right click) and save the [Modes.prj.xml file](https://raw.githubusercontent.com/jhotmann/tasker-phone-modes/master/Modes.prj.xml) to your device.
     Then open up Tasker, long press on a project tab at the bottom, and select Import. Then browse to and select the downloaded file.
 
     The same Taskernet url can be used for **upgrades** as well. Select `Import`, then `YES` on the resulting Import dialog, then `YES` when asked to overwrite the existing `Modes` project, let Tasker do its import process, you can select `NO` or `OK` on the Missing Permissions dialog, select `NO` when asked to enable all profiles, and lastly select `YES` when asked if you want to run the Setup task even if you've run it before because it will activate the important profiles.
 
 1. ### Run Setup task
-    If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates.
+    If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates. *Note: the Create Directory step will error if the directory already exists, but it's set to continue after error so it's fine.*
 
 1. ### Create config files
-    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage so you don't need to bookmark the URL. You can also see the [Configuration Spec](#configuration-spec) section for manual config creation.
+    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage so you don't need to bookmark the URL. You can also see the [Configuration Spec](#configuration-spec) section for manual config creation. As of version `1.6.0` all configuration details are stored in memory so if you make changes to your configuration files make sure to run the `ReadConfigFiles` task to re-read the configuration files into memory.
 
 1. ### Create profiles and tasks to change the current context
 

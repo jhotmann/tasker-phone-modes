@@ -2,22 +2,21 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice global goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint no-unused-vars: "on" */
 
-let version = '1.5.0';
+let version = '1.6.0';
 setGlobal('Modes_Version', version);
 
-const CONFIG_PATH = global('Modes_ConfigPath');
+const ALL_CONFIGS = JSON.parse(global('Modes_Configs'));
 const DEFAULT_CONTEXT = global('Modes_DefaultContext');
 let contexts = global('Modes_Contexts').split(',').filter(c => { return (c !== '') });
 let previousContexts = global('Modes_ActiveContexts').split(',').filter(c => { return (c !== '') });
 
-// Read config files
-let configs = contexts.map(context => {
-  return readConfigFile(context);
-});
+// Filter down to only configs in %Modes_Contexts
+let configs = ALL_CONFIGS.filter(c => { return contexts.indexOf(c.name) > -1 });
+let defaultContext = (DEFAULT_CONTEXT && typeof DEFAULT_CONTEXT === 'string' ? ALL_CONFIGS.find(c => { return c.name === DEFAULT_CONTEXT }) : null) || { priority: 0 };
 
 // Determine which contexts will be activated based upon type and priority
 let activeContexts = [];
-let primaryContext = configs.filter(c => { return c.type === 1; }).sort((a, b) => { return a.priority - b.priority; }).pop() || (DEFAULT_CONTEXT && typeof DEFAULT_CONTEXT === 'string' ? readConfigFile(DEFAULT_CONTEXT) : { priority: 0 });
+let primaryContext = configs.filter(c => { return c.type === 1; }).sort((a, b) => { return a.priority - b.priority; }).pop() || defaultContext;
 let primaryPriority = primaryContext.priority || 0;
 activeContexts.push(primaryContext.name);
 let secondaryContexts = configs.filter(c => { return (c.type === 2 && c.priority >= primaryPriority); }).sort((a, b) => { return a.priority - b.priority; });
@@ -30,20 +29,21 @@ let newContexts = missingItems(activeContexts, previousContexts);
 let inactivatedContexts = missingItems(previousContexts, activeContexts);
 
 // Perform exit parameters for inactivated contexts
-inactivatedContexts.forEach(contextName => {
-  context = readConfigFile(contextName);  
-  if (context.exit) {
-    if (context.exit.profilesToDisable && Array.isArray(context.exit.profilesToDisable)) context.exit.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
-    if (context.exit.profilesToEnable && Array.isArray(context.exit.profilesToEnable)) context.exit.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
-    if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => {
-      if (typeof tsk === 'string') {
-        executeTask(tsk, 10, null, null);
-      } else if (typeof tsk === 'object' && tsk.name) {
-        executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2);
-      }
-    });
-  }
-});
+ALL_CONFIGS
+  .filter(c => { return inactivatedContexts.indexOf(c.name) > -1 })
+  .forEach(context => {
+    if (context.exit) {
+      if (context.exit.profilesToDisable && Array.isArray(context.exit.profilesToDisable)) context.exit.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
+      if (context.exit.profilesToEnable && Array.isArray(context.exit.profilesToEnable)) context.exit.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
+      if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => {
+        if (typeof tsk === 'string') {
+          executeTask(tsk, 10, null, null);
+        } else if (typeof tsk === 'object' && tsk.name) {
+          executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2);
+        }
+      });
+    }
+  });
 
 // Merge active context's settings
 let merged = {};
@@ -73,7 +73,7 @@ if (existsIsType(merged, 'hapticFeedbackOn', 'boolean')) performTask('TouchVibra
 if (existsIsType(merged, 'batterySaverOn', 'boolean')) performTask('BatterySaver', 10, merged.batterySaverOn, '');
 
 // Perform enter parameters for new contexts
-configs
+ALL_CONFIGS
   .filter(context => { return (newContexts.indexOf(context.name) > -1) })
   .forEach(context => {
     if (context.enter) {
@@ -95,27 +95,6 @@ setGlobal('Modes_ActiveContexts', activeContexts.join(','));
 exit();
 
 // Helper functions
-function readConfigFile(configName) {
-  let configText = '{}';
-  try {
-    configText = readFile(CONFIG_PATH + '/' + configName + '.json');
-  } catch (error) {
-    flash('Error reading configuration file ' + CONFIG_PATH + '/' + configName + '.json');
-  }
-  let conf = JSON.parse(configText);
-  if (!conf.name) conf.name = configName;
-  if (!conf.type) conf.type = 1;
-  if (!conf.priority) conf.priority = 50;
-  // Translate old configuration format
-  if (Object.keys(conf).indexOf('volume') > -1) {
-    if (conf.volume.media !== null) conf.volume_media = conf.volume.media;
-    if (conf.volume.notification !== null) conf.volume_notification = conf.volume.notification;
-    if (conf.volume.dnd !== null) conf.dnd = conf.volume.dnd;
-    delete conf.volume;
-  }
-  return conf;
-}
-
 function missingItems(arr1, arr2) {
   var missing = arr1.filter(function(item) {
     return arr2.indexOf(item) === -1;

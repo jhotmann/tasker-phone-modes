@@ -8,6 +8,8 @@ if (path != null) {
   setGlobal('Modes_ConfigPath', path);
 }
 
+performTask('ReadConfigFiles', 99, null, null);
+
 var defaultContext = global('Modes_DefaultContext');
 var dc = prompt('What would you like to be the default primary context?', (defaultContext ? defaultContext : ''));
 if (dc != null) {
