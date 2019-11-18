@@ -29,6 +29,7 @@ Out of the box the following settings changes are supported:
 * Location Mode+
 * Wifi on/off
 * Bluetooth on/off
+* Mobile Data on/off++
 * Airplane Mode on/off
 * Display Rotation on/off
 * Display Timeout
@@ -37,12 +38,12 @@ Out of the box the following settings changes are supported:
 * Battery Saver on/off+
 * And much more\*
 
-\+ *Requires you to grant Tasker the `WRITE_SECURE_SETTINGS` permission. Instructions [here](https://tasker.joaoapps.com/userguide/en/help/ah_secure_setting_grant.html)*  
+\+ *Requires you to grant Tasker the `WRITE_SECURE_SETTINGS` permission. Instructions [here](https://tasker.joaoapps.com/userguide/en/help/ah_secure_setting_grant.html)*   
 \* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
 
 # Framework Advantages Over Standard Tasker Profiles
 1. Profile conflict management
-    
+
     With standard profiles if you want to avoid a profile being active while another is active you have to do some sort of check, like `%PACTIVE` regex matching the other profile name(s) or set a custom global variable with a value when the other profile is active and add that as a condition to your profile. With this framework you don't need those checks because the `type` and `priority` properties handle that for you, so you can create profiles with a simple, single condition and let the framework handle the rest.
 
 1. Configuration merging
@@ -109,6 +110,9 @@ The configuration files each contain a single JSON object with the following pro
 * `bluetoothOn` - turn Bluetooth on or off
   * `true` - turns Bluetooth on
   * `false` - turns Bluetooth off
+* `mobileDataOn` - turn Mobile Data on or off
+  * `true` - turns Mobile Data on
+  * `false` - turns Mobile Data off
 * `airplaneModeOn` - turns airplane mode on or off
   * `true` - turns airplane mode on
   * `false` - turns airplane mode off

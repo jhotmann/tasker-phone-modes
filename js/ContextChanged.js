@@ -65,6 +65,7 @@ if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merge
 if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
 if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
 if (existsIsType(merged, 'bluetoothOn', 'boolean')) setBT(merged.bluetoothOn);
+if (existsIsType(merged, 'mobileDataOn', 'boolean')) performTask('MobileData', 10, merged.mobileDataOn, '');
 if (existsIsType(merged, 'airplaneModeOn', 'boolean')) setAirplaneMode(merged.airplaneModeOn);
 if (existsIsType(merged, 'screenRotationOn', 'boolean')) performTask('DisplayRotate', 10, merged.screenRotationOn, '');
 if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
