@@ -29,6 +29,22 @@ let newContexts = missingItems(activeContexts, previousContexts);
 let inactivatedContexts = missingItems(previousContexts, activeContexts);
 
 // Perform exit parameters for inactivated contexts
+<<<<<<< HEAD
+inactivatedContexts.forEach(contextName => {
+  context = readConfigFile(contextName);
+  if (context.exit) {
+    if (context.exit.profilesToDisable && Array.isArray(context.exit.profilesToDisable)) context.exit.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
+    if (context.exit.profilesToEnable && Array.isArray(context.exit.profilesToEnable)) context.exit.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
+    if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => {
+      if (typeof tsk === 'string') {
+        executeTask(tsk, 10, null, null);
+      } else if (typeof tsk === 'object' && tsk.name) {
+        executeTask(tsk.name, tsk.priority, tsk.param1, tsk.param2);
+      }
+    });
+  }
+});
+=======
 ALL_CONFIGS
   .filter(c => { return inactivatedContexts.indexOf(c.name) > -1 })
   .forEach(context => {
@@ -44,6 +60,7 @@ ALL_CONFIGS
       });
     }
   });
+>>>>>>> 1.6.0
 
 // Merge active context's settings
 let merged = {};
@@ -65,6 +82,7 @@ if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merge
 if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
 if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
 if (existsIsType(merged, 'bluetoothOn', 'boolean')) setBT(merged.bluetoothOn);
+if (existsIsType(merged, 'mobileDataOn', 'boolean')) performTask('MobileData', 10, merged.mobileDataOn, '');
 if (existsIsType(merged, 'airplaneModeOn', 'boolean')) setAirplaneMode(merged.airplaneModeOn);
 if (existsIsType(merged, 'screenRotationOn', 'boolean')) performTask('DisplayRotate', 10, merged.screenRotationOn, '');
 if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
