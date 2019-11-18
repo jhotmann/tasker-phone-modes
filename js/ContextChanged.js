@@ -44,7 +44,6 @@ ALL_CONFIGS
       });
     }
   });
->>>>>>> 1.6.0
 
 // Merge active context's settings
 let merged = {};
