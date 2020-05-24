@@ -3,6 +3,7 @@
   "priority": 60,
   "volume_notification": 5,
   "volume_media": 15,
+  "volume_media_override": false,
   "dnd": "all",
   "wifiOn": false,
   "bluetoothOn": true,

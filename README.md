@@ -95,6 +95,9 @@ The configuration files each contain a single JSON object with the following pro
 * `volume_media` - set the media volume
   * An integer from `0` to `15`
   * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+- `volume_media_override` - persist manual changes to media volume while context is active
+  - `true` - manual changes to media volume are persisted
+  - `false` - manual changes to media volume will be overridden when context changes
 * `dnd` - set the Do Not Disturb mode
   * `"all"` - Do Not Disturb off
   * `"priority"` - Priority-only
@@ -232,6 +235,7 @@ I have another primary context named `car` that is activated when I'm connected 
   "priority": 60,
   "volume_notification": 5,
   "volume_media": 15,
+  "volume_media_override": false,
   "dnd": "all",
   "wifiOn": false,
   "bluetoothOn": true,
@@ -333,29 +337,14 @@ Now on to my `secondary` contexts. First is `night` which turns on from 11pm unt
 
 `earbuds.json` - when headphones are plugged in or connected to Bluetooth earbuds
 
-*You will notice that both earbuds and music contexts enable a profile named `MediaOverride`. This profile will activate whenever the media volume is manually changed and save a configuration file with the current media volume. This profile is useful because without this profile if your context changes (for example you leave your house), the media volume would be returned to the default value for the earbuds or music configuration. It is important that if you use this profile that when the context that enables the profile is removed, you should also remove the `mediaoverride` context. I have included an example profile in the project.*
+*You will notice that both earbuds and music contexts use the `volume_media_override` option. This option will activate whenever the media volume is manually changed and will prevent the media volume from being changed while the context (or any profile with this setting set to `true`) remains active. This profile is useful because without this setting enabled if your context changes (for example you leave your house), the media volume would be returned to the default value for the earbuds or music configuration which could disrupt your listening experience.*
 
 ```json
 {
   "type": 2,
   "priority": 80,
   "volume_media": 5,
-  "enter": {
-    "profilesToEnable": ["MediaOverride"]
-  },
-  "exit": {
-    "profilesToDisable": ["MediaOverride"]
-  }
-}
-```
-
-The `MediaOverride` profile writes a configuration file that looks like this:
-
-```json
-{
-  "type": 2,
-  "priority": 81,
-  "volume_media": %VOLM
+  "volume_media_override": true
 }
 ```
 
@@ -366,12 +355,7 @@ The `MediaOverride` profile writes a configuration file that looks like this:
   "type": 2,
   "priority": 55,
   "volume_media": 15,
-  "enter": {
-    "profilesToEnable": ["MediaOverride"]
-  },
-  "exit": {
-    "profilesToDisable": ["MediaOverride"]
-  }
+  "volume_media_override": true
 }
 ```
 

@@ -2,10 +2,5 @@
   "type": 2,
   "priority": 80,
   "volume_media": 5,
-  "enter": {
-    "profilesToEnable": ["MediaOverride"]
-  },
-  "exit": {
-    "profilesToDisable": ["MediaOverride"]
-  }
+  "volume_media_override": true
 }

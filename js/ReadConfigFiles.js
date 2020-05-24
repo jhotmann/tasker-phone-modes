@@ -11,6 +11,7 @@ fileList.forEach(f => {
   configs.push(conf);
 });
 setGlobal('Modes_Configs', JSON.stringify(configs));
+exit();
 
 function readConfigFile(configName) {
   let configText = '{}';
