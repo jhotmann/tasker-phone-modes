@@ -35,6 +35,7 @@ Out of the box the following settings changes are supported:
 * Display Timeout
 * Display Brightness
 * Immersive Mode
+* Dark Mode
 * Haptic Feedback on/off+
 * Battery Saver on/off+
 * And much more\*
