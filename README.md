@@ -180,6 +180,7 @@ If you'd like to create configuration files manually instead of using the [Confi
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
   "immersiveMode": "null, off (immersive mode off), status (hide status bar), navigation (hide navigation bar), both (hide both)",
+  "darkMode": "null or boolean",
   "hapticFeedbackOn": "null or boolean",
   "batterySaverOn": "null or boolean",
   "enter": {
