@@ -74,6 +74,20 @@
                     <input class="form-check-input" type="checkbox" value="1" name="mediaVolCheck1" id="mediaVolCheck1">
                     <label class="form-check-label" for="mediaVolCheck1">Change media volume</label>
                     <input type="number" class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 to 15" disabled>
+                    <p style="padding-left: 20px;">Allow manual media volume changes to persist while context is active. For example, select yes for a headphones context to prevent manual volume changes from being reset if you leave your house.</p>
+                    <p style="padding-left: 20px;" class="font-italic">Note: only select No if you want to override this option for lower priority contexts.</p>
+                    <div style="padding-left: 20px;" class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="mediaVolOverrideRadioOptions" id="mediaVolOverrideRadio1" value="yes" disabled>
+                      <label class="form-check-label" for="mediaVolOverrideRadio1">Yes</label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="mediaVolOverrideRadioOptions" id="mediaVolOverrideRadio2" value="no" disabled>
+                      <label class="form-check-label" for="mediaVolOverrideRadio2">No</label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="mediaVolOverrideRadioOptions" id="mediaVolOverrideRadio3" value="null" disabled checked>
+                      <label class="form-check-label" for="mediaVolOverrideRadio3">Null</label>
+                    </div>
                   </p>
                 </p>
               </div>
@@ -379,9 +393,15 @@
       $("#mediaVolCheck1").change(function() {
         if(this.checked) {
           $("#mediaVolInput").prop("disabled", false);
+          $("#mediaVolOverrideRadio1").prop("disabled", false);
+          $("#mediaVolOverrideRadio2").prop("disabled", false);
+          $("#mediaVolOverrideRadio3").prop("disabled", false);
           $("#mediaVolInput").select();
         } else {
           $("#mediaVolInput").prop("disabled", true);
+          $("#mediaVolOverrideRadio1").prop("disabled", true);
+          $("#mediaVolOverrideRadio2").prop("disabled", true);
+          $("#mediaVolOverrideRadio3").prop("disabled", true);
         }
       });
       $("#dndCheck1").change(function() {
@@ -518,6 +538,8 @@
         if (notifVolObj !== undefined && Number.isInteger(parseInt(notifVolObj.value))) configObj.volume_notification = parseInt(notifVolObj.value);
         let mediaVolObj = formObj.find(o => { return (o.name === "mediaVolInput"); });
         if (mediaVolObj !== undefined && Number.isInteger(parseInt(mediaVolObj.value))) configObj.volume_media = parseInt(mediaVolObj.value);
+        let mediaVolOverride = formObj.find(o => { return (o.name === "mediaVolOverrideRadioOptions"); });
+        if (mediaVolOverride !== undefined && mediaVolOverride.value !== "null") configObj.volume_media_override = (mediaVolOverride.value === "yes");
         let dndObj = formObj.find(o => { return (o.name === "dndRadios"); });
         if (dndObj !== undefined) configObj.dnd = dndObj.value;
         let locationObj = formObj.find(o => { return (o.name === "locationRadios"); });
