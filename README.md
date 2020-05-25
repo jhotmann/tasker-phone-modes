@@ -134,6 +134,9 @@ The configuration files each contain a single JSON object with the following pro
   * `"status"` - hide the status bar
   * `"navigation"` - hide the navigation bar
   * `"both"` - hide both status and navigation bars
+- `darkMode` - turns system dark theme on or off (Android 10+ on Tasker-supported devices)
+  - `true` - dark mode on
+  - `false` - dark mode off
 * `hapticFeedbackOn` - turns haptic feedback on or off
   * `true` - turns haptic feedback on
   * `false` - turns haptic feedback off
@@ -165,6 +168,7 @@ If you'd like to create configuration files manually instead of using the [Confi
   "priority": "null or integer (0-100)",
   "volume_notification": "null or integer (0-7)",
   "volumn_media": "null or integer (0-15)",
+  "volume_media_override": "null or boolean",
   "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)",
   "location": "null, off (to turn off location), accuracy (for High Accuracy), battery (for Battery Saver), or device (for Device Only)",
   "wifiOn": "null or boolean",

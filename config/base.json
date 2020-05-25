@@ -3,6 +3,7 @@
   "priority": "null or integer (0-100)",
   "volume_notification": "null or integer (0-7)",
   "volumn_media": "null or integer (0-15)",
+  "volume_media_override": "null or boolean",
   "dnd": "null, all (with quotes to turn off dnd), priority (with quotes for priority only), alarms (with quotes for alarms only), or none (with quotes for total silence)",
   "location": "null, off (to turn off location), accuracy (for High Accuracy), battery (for Battery Saver), or device (for Device Only)",
   "wifiOn": "null or boolean",
@@ -13,6 +14,7 @@
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
   "immersiveMode": "null, off (immersive mode off), status (hide status bar), navigation (hide navigation bar), both (hide both)",
+  "darkMode": "null or boolean",
   "hapticFeedbackOn": "null or boolean",
   "batterySaverOn": "null or boolean",
   "enter": {

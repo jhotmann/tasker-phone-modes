@@ -64,16 +64,16 @@
               <div class="card-body">
                 <h5 class="card-title">Volumes</h5>
                 <p class="card-text">
-                  <p>Set the notification and media volumes.</p>
+                  <p>Set the notification and media volumes. The number of volume steps depends on the device and manufacturer.</p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="notifVolCheck1" id="notifVolCheck1">
                     <label class="form-check-label" for="notifVolCheck1">Change notification volume</label>
-                    <input type="number" class="form-control" name="notifVolInput" id="notifVolInput" placeholder="Enter a number 0 to 7" disabled>
+                    <input type="number" class="form-control" name="notifVolInput" id="notifVolInput" placeholder="Enter a number 0 or higher" disabled>
                   </p>
                   <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="mediaVolCheck1" id="mediaVolCheck1">
                     <label class="form-check-label" for="mediaVolCheck1">Change media volume</label>
-                    <input type="number" class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 to 15" disabled>
+                    <input type="number" class="form-control" name="mediaVolInput" id="mediaVolInput" placeholder="Enter a number 0 or higher" disabled>
                     <p style="padding-left: 20px;">Allow manual media volume changes to persist while context is active. For example, select yes for a headphones context to prevent manual volume changes from being reset if you leave your house.</p>
                     <p style="padding-left: 20px;" class="font-italic">Note: only select No if you want to override this option for lower priority contexts.</p>
                     <div style="padding-left: 20px;" class="form-check-inline">
@@ -88,6 +88,130 @@
                       <input class="form-check-input" type="radio" name="mediaVolOverrideRadioOptions" id="mediaVolOverrideRadio3" value="null" disabled checked>
                       <label class="form-check-label" for="mediaVolOverrideRadio3">Null</label>
                     </div>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Display</h5>
+                <p class="card-text">
+                  <p>Change display settings.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="rotationCheck1" id="rotationCheck1">
+                    <label class="form-check-label" for="rotationCheck1">Turn display rotation on/off</label>
+                    <fieldset id="rotationFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio1" value="true" checked>
+                        <label class="form-check-label" for="rotationRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio2" value="false">
+                        <label class="form-check-label" for="rotationRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="timeoutCheck1" id="timeoutCheck1">
+                    <label class="form-check-label" for="timeoutCheck1">Change display timeout (minutes)</label>
+                    <input type="number" class="form-control" name="timeoutInput" id="timeoutInput" placeholder="Enter a number 1 or higher" disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="brightnessCheck1" id="brightnessCheck1">
+                    <label class="form-check-label" for="brightnessCheck1">Change display brightness</label>
+                    <input type="text" autocapitalize="none" class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="immersiveCheck1" id="immersiveCheck1">
+                    <label class="form-check-label" for="immersiveCheck1">Change immersive mode</label>
+                    <fieldset id="immersiveFieldset" disabled>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="immersiveRadios" id="immersiveRadios1" value="off" checked>
+                        <label class="form-check-label" for="immersiveRadios1">Immersive mode off</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="immersiveRadios" id="immersiveRadios2" value="status">
+                        <label class="form-check-label" for="immersiveRadios2">Status bar only</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="immersiveRadios" id="immersiveRadios3" value="navigation">
+                        <label class="form-check-label" for="immersiveRadios3">Navigation bar only</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="immersiveRadios" id="immersiveRadios4" value="both">
+                        <label class="form-check-label" for="immersiveRadios4">Full immersive mode</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="darkModeCheck1" id="darkModeCheck1">
+                    <label class="form-check-label" for="darkModeCheck1">Turn dark mode on/off</label>
+                    <fieldset id="darkModeFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio1" value="true" checked>
+                        <label class="form-check-label" for="darkModeRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio2" value="false">
+                        <label class="form-check-label" for="darkModeRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Radios</h5>
+                <p class="card-text">
+                  <p>Turn on/off device radios.</p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="wifiCheck1" id="wifiCheck1">
+                    <label class="form-check-label" for="wifiCheck1">Turn Wifi on/off</label>
+                    <fieldset id="wifiFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio1" value="true" checked>
+                        <label class="form-check-label" for="wifiRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio2" value="false">
+                        <label class="form-check-label" for="wifiRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="bluetoothCheck1" id="bluetoothCheck1">
+                    <label class="form-check-label" for="bluetoothCheck1">Turn Bluetooth on/off</label>
+                    <fieldset id="bluetoothFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio1" value="true" checked>
+                        <label class="form-check-label" for="bluetoothRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio2" value="false">
+                        <label class="form-check-label" for="bluetoothRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="airplaneCheck1" id="airplaneCheck1">
+                    <label class="form-check-label" for="airplaneCheck1">Turn Airplane Mode on/off</label>
+                    <fieldset id="airplaneFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio1" value="true" checked>
+                        <label class="form-check-label" for="airplaneRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio2" value="false">
+                        <label class="form-check-label" for="airplaneRadio2">Off</label>
+                      </div>
+                    </fieldset>
                   </p>
                 </p>
               </div>
@@ -156,94 +280,6 @@
                       <label class="form-check-label" for="locationRadios4">Device - device only mode</label>
                     </div>
                   </fieldset>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card mb-3">
-              <div class="card-body">
-                <h5 class="card-title">Radios</h5>
-                <p class="card-text">
-                  <p>Turn on/off device radios.</p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="wifiCheck1" id="wifiCheck1">
-                    <label class="form-check-label" for="wifiCheck1">Turn Wifi on/off</label>
-                    <fieldset id="wifiFieldset" style="padding-left:30px;" disabled>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio1" value="true" checked>
-                        <label class="form-check-label" for="wifiRadio1">On</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="wifiRadio" id="wifiRadio2" value="false">
-                        <label class="form-check-label" for="wifiRadio2">Off</label>
-                      </div>
-                    </fieldset>
-                  </p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="bluetoothCheck1" id="bluetoothCheck1">
-                    <label class="form-check-label" for="bluetoothCheck1">Turn Bluetooth on/off</label>
-                    <fieldset id="bluetoothFieldset" style="padding-left:30px;" disabled>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio1" value="true" checked>
-                        <label class="form-check-label" for="bluetoothRadio1">On</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="bluetoothRadio" id="bluetoothRadio2" value="false">
-                        <label class="form-check-label" for="bluetoothRadio2">Off</label>
-                      </div>
-                    </fieldset>
-                  </p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="airplaneCheck1" id="airplaneCheck1">
-                    <label class="form-check-label" for="airplaneCheck1">Turn Airplane Mode on/off</label>
-                    <fieldset id="airplaneFieldset" style="padding-left:30px;" disabled>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio1" value="true" checked>
-                        <label class="form-check-label" for="airplaneRadio1">On</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="airplaneRadio" id="airplaneRadio2" value="false">
-                        <label class="form-check-label" for="airplaneRadio2">Off</label>
-                      </div>
-                    </fieldset>
-                  </p>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-md-6 col-lg-4">
-            <div class="card mb-3">
-              <div class="card-body">
-                <h5 class="card-title">Display</h5>
-                <p class="card-text">
-                  <p>Change display settings.</p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="rotationCheck1" id="rotationCheck1">
-                    <label class="form-check-label" for="rotationCheck1">Turn display rotation on/off</label>
-                    <fieldset id="rotationFieldset" style="padding-left:30px;" disabled>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio1" value="true" checked>
-                        <label class="form-check-label" for="rotationRadio1">On</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="rotationRadio" id="rotationRadio2" value="false">
-                        <label class="form-check-label" for="rotationRadio2">Off</label>
-                      </div>
-                    </fieldset>
-                  </p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="timeoutCheck1" id="timeoutCheck1">
-                    <label class="form-check-label" for="timeoutCheck1">Change display timeout (minutes)</label>
-                    <input type="number" class="form-control" name="timeoutInput" id="timeoutInput" placeholder="Enter a number 1 or higher" disabled>
-                  </p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="brightnessCheck1" id="brightnessCheck1">
-                    <label class="form-check-label" for="brightnessCheck1">Change display brightness</label>
-                    <input type="text" autocapitalize="none" class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
-                  </p>
                 </p>
               </div>
             </div>
@@ -462,6 +498,20 @@
           $("#brightnessInput").prop("disabled", true);
         }
       });
+      $("#immersiveCheck1").change(function() {
+        if(this.checked) {
+          $("#immersiveFieldset").prop("disabled", false);
+        } else {
+          $("#immersiveFieldset").prop("disabled", true);
+        }
+      });
+      $("#darkModeCheck1").change(function() {
+        if(this.checked) {
+          $("#darkModeFieldset").prop("disabled", false);
+        } else {
+          $("#darkModeFieldset").prop("disabled", true);
+        }
+      });
       $("#hapticCheck1").change(function() {
         if(this.checked) {
           $("#hapticFieldset").prop("disabled", false);
@@ -556,6 +606,10 @@
         if (timeoutObj !== undefined && Number.isInteger(parseInt(timeoutObj.value))) configObj.displayTimeout = parseInt(timeoutObj.value);
         let brightnessObj = formObj.find(o => { return (o.name === "brightnessInput"); });
         if (brightnessObj !== undefined && Number.isInteger(parseInt(brightnessObj.value))) configObj.displayBrightness = parseInt(brightnessObj.value);
+        let immersiveObj = formObj.find(o => { return (o.name === "immersiveRadios"); });
+        if (immersiveObj !== undefined) configObj.immersiveMode = immersiveObj.value;
+        let darkModeObj = formObj.find(o => { return (o.name === "darkModeRadio"); });
+        if (darkModeObj !== undefined) configObj.darkMode = (darkModeObj.value === "true" ? true : false);
         let hapticObj = formObj.find(o => { return (o.name === "hapticRadio"); });
         if (hapticObj !== undefined) configObj.hapticFeedbackOn = (hapticObj.value === "true" ? true : false);
         let batteryObj = formObj.find(o => { return (o.name === "batteryRadio"); });
