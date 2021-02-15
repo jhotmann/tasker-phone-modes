@@ -90,7 +90,25 @@ The configuration files each contain a single JSON object with the following pro
 * `priority` - to determine what context(s) take priority when multiple are active
   * An integer from `0` to `100`
   * The default is `50`
+* `volume_alarm` - set the notification volume
+  * An integer from `0` to `7`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_bt_voice` - set the notification volume
+  * An integer from `0` to `15`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_call` - set the notification volume
+  * An integer from `0` to `6`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_dtmf` - set the notification volume
+  * An integer from `0` to `15`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
 * `volume_notification` - set the notification volume
+  * An integer from `0` to `7`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_system` - set the notification volume
+  * An integer from `0` to `7`
+  * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
+* `volume_ringer` - set the notification volume
   * An integer from `0` to `7`
   * I believe manufacturers can change how many volume steps there are so the max number could be different on your device
 * `volume_media` - set the media volume
