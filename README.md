@@ -104,6 +104,13 @@ The configuration files each contain a single JSON object with the following pro
   * `"priority"` - Priority-only
   * `"alarms"` - Alarms-only
   * `"none"` - Total silence
+* `silentMode` - set the Silent Mode
+  * `"on"` - turn Silent Mode on
+  * `"vibrate"` - turn Vibrate Mode on
+  * `"off"` - turn Silent Mode on
+* `autoSyncOn` - set the Auto Sync on or off
+  * `true` - turns Auto Sync on
+  * `false` - turns Auto Sync off
 * `location` - change the location mode
   * `"off"` - location services off
   * `"accuracy"` - high accuracy mode (uses GPS, Wifi, Bluetooth, and mobile networks)

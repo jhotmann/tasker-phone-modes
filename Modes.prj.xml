@@ -283,6 +283,8 @@ if (existsIsType(merged, 'volume_media_override', 'boolean') &amp;&amp; merged.v
 
 if (existsIsType(merged, 'volume_notification', 'int')) notificationVol(merged.volume_notification, false, false);
 if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
+if (existsIsType(merged, 'silentMode', 'string')) silentMode(merged.silentMode);
+if (existsIsType(merged, 'autoSyncOn', 'boolean')) setAutoSync(merged.autoSyncOn);
 if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
 if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
 if (existsIsType(merged, 'bluetoothOn', 'boolean')) setBT(merged.bluetoothOn);
