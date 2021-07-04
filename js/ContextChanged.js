@@ -69,7 +69,13 @@ if (existsIsType(merged, 'volume_media_override', 'boolean') && merged.volume_me
   if (mediaVolExists) mediaVol(merged.volume_media, false, false);
 }
 
+if (existsIsType(merged, 'volume_alarm', 'int')) alarmVol(merged.volume_alarm, false, false);
+if (existsIsType(merged, 'volume_bt_voice', 'int')) btVoiceVol(merged.volume_bt_voice, false, false);
+if (existsIsType(merged, 'volume_call', 'int')) callVol(merged.volume_call, false, false);
+if (existsIsType(merged, 'volume_dtmf', 'int')) dtmfVol(merged.volume_dtmf, false, false);
 if (existsIsType(merged, 'volume_notification', 'int')) notificationVol(merged.volume_notification, false, false);
+if (existsIsType(merged, 'volume_system', 'int')) systemVol(merged.volume_system, false, false);
+if (existsIsType(merged, 'volume_ringer', 'int')) ringerVol(merged.volume_ringer, false, false);
 if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
 if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
 if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
