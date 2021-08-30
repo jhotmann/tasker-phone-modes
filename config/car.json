@@ -10,6 +10,7 @@
   "screenRotationOn": true,
   "displayTimeout": 5,
   "displayBrightness": "auto",
+  "extraDimOn": false,
   "hapticFeedbackOn": true,
   "enter": {
     "tasksToRun": [{

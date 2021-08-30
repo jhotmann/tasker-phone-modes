@@ -2,7 +2,7 @@
 /*global alarmVol audioRecord audioRecordStop btVoiceVol browseURL button call callBlock callDivert callRevert callVol carMode clearKey composeEmail composeMMS composeSMS convert createDir createScene cropImage decryptDir decryptFile deleteDir deleteFile destroyScene disable displayAutoBright displayAutoRotate displayTimeout dpad dtmfVol elemBackColour elemBorder elemPosition elemText elemTextColour elemTextSize elemVisibility endCall enableProfile encryptDir encryptFile enterKey exit flash flashLong filterImage flipImage getLocation getVoice goHome haptics hideScene listFiles loadApp loadImage local lock mediaControl mediaVol micMute mobileData musicBack musicPlay musicSkip musicStop nightMode notificationVol performTask popup profileActive pulse readFile reboot resizeImage ringerVol rotateImage saveImage say scanCard sendIntent sendSMS setClip settings setAirplaneMode setAirplaneRadios setAlarm setAutoSync setBT setBTID setGlobal setKey setLocal setWallpaper setWifi shell showScene shutdown silentMode sl4a soundEffects speakerphone statusBar stayOn stopLocation systemLock systemVol takeCall takePhoto taskRunning type unzip usbTether vibrate vibratePattern wait wifiTether writeFile zip*/
 /* eslint-enable no-unused-vars */
 
-let version = '1.8.0';
+let version = '1.9.0';
 setGlobal('Modes_Version', version);
 
 const ALL_CONFIGS = JSON.parse(global('Modes_Configs'));
@@ -59,18 +59,21 @@ secondaryContexts.forEach(context => {
 });
 
 // Change settings according to merged context
+// DND first, if going from none/priority to all it must occur for media volume changes to occur (Android 12+)
+if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
+
+// Only change media volume if %modes_mediaoverride != 1
 const mediaVolExists = existsIsType(merged, 'volume_media', 'int');
 if (existsIsType(merged, 'volume_media_override', 'boolean') && merged.volume_media_override) {
-  if (mediaVolExists && global('Modes_MediaOverride') !== '1') mediaVol(merged.volume_media, false, false);
+  if (mediaVolExists && local('modes_mediaoverride') !== '1') mediaVol(merged.volume_media, false, false);
   enableProfile('ModesMediaOverride', true);
 } else {
   enableProfile('ModesMediaOverride', false);
-  setGlobal('Modes_MediaOverride', '0');
+  setLocal('modes_mediaoverride', '0');
   if (mediaVolExists) mediaVol(merged.volume_media, false, false);
 }
 
 if (existsIsType(merged, 'volume_notification', 'int')) notificationVol(merged.volume_notification, false, false);
-if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
 if (existsIsType(merged, 'location', 'string')) performTask('LocationMode', 10, merged.location, '');
 if (existsIsType(merged, 'wifiOn', 'boolean')) setWifi(merged.wifiOn);
 if (existsIsType(merged, 'bluetoothOn', 'boolean')) setBT(merged.bluetoothOn);
@@ -79,8 +82,10 @@ if (existsIsType(merged, 'airplaneModeOn', 'boolean')) setAirplaneMode(merged.ai
 if (existsIsType(merged, 'screenRotationOn', 'boolean')) performTask('DisplayRotate', 10, merged.screenRotationOn, '');
 if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
 if (existsIsType(merged, 'displayBrightness', 'int') || existsIsType(merged, 'displayBrightness', 'string')) performTask('DisplayBrightness', 10, merged.displayBrightness, '');
+if (existsIsType(merged, 'extraDimOn', 'boolean')) performTask('ExtraDim', 10, merged.extraDimOn, '');
 if (existsIsType(merged, 'immersiveMode', 'string')) performTask('ImmersiveMode', 10, merged.immersiveMode, '');
 if (existsIsType(merged, 'darkMode', 'boolean')) performTask('DarkMode', 10, merged.darkMode, '');
+if (existsIsType(merged, 'grayscaleMode', 'boolean')) performTask('GrayscaleMode', 10, merged.grayscaleMode, '');
 if (existsIsType(merged, 'hapticFeedbackOn', 'boolean')) performTask('TouchVibrations', 10, merged.hapticFeedbackOn, '');
 if (existsIsType(merged, 'batterySaverOn', 'boolean')) performTask('BatterySaver', 10, merged.batterySaverOn, '');
 

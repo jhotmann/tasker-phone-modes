@@ -9,5 +9,6 @@
   "screenRotationOn": false,
   "displayTimeout": 1,
   "displayBrightness": "auto",
+  "extraDimOn": false,
   "hapticFeedbackOn": true
 }
