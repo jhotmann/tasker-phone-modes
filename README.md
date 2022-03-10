@@ -49,6 +49,7 @@ Out of the box the following settings changes are supported:
 * Display Brightness
 * Immersive Mode
 * Dark Mode
+* Night Light+ (May only work on Pixels)
 * Extra Dim Screen+ (Added in Android 12)
 * Grayscale Mode+
 * Haptic Feedback on/off+
@@ -132,6 +133,12 @@ The configuration files each contain a single JSON object with the following pro
 * `displayBrightness` - change the display brightness
   * An integer from `0` to `255`
   * `"auto"` will restore auto brightness
+- `nightLightOn` - turns Night Light (blue light filter) on or off
+  - `true` - turns Night Light on
+  - `false` - turns Night Light off
+- `extraDimOn` - turns Extra Dim mode on or off
+  - `true` - turns Extra Dim on
+  - `false` - turns Extra Dim off
 * `immersiveMode` - hide/unhide the status bar, navigation bar, or both
   * `"off"` - immersive mode off
   * `"status"` - hide the status bar
@@ -140,6 +147,9 @@ The configuration files each contain a single JSON object with the following pro
 - `darkMode` - turns system dark theme on or off (Android 10+ on Tasker-supported devices)
   - `true` - dark mode on
   - `false` - dark mode off
+- `grayscaleMode` - turns grayscale mode on or off
+  - `true` - grayscale mode
+  - `false` - full color mode
 * `hapticFeedbackOn` - turns haptic feedback on or off
   * `true` - turns haptic feedback on
   * `false` - turns haptic feedback off
@@ -181,6 +191,9 @@ If you'd like to create configuration files manually instead of using the [Confi
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
+  "nightLightOn": "null or boolean",
+  "extraDimOn": "null or boolean",
+  "grayscaleMode": "null or boolean",
   "immersiveMode": "null, off (immersive mode off), status (hide status bar), navigation (hide navigation bar), both (hide both)",
   "darkMode": "null or boolean",
   "hapticFeedbackOn": "null or boolean",
@@ -231,9 +244,22 @@ I have a primary context named `home` that is activated when I'm connected to my
   "screenRotationOn": false,
   "displayTimeout": 1,
   "displayBrightness": "auto",
-  "hapticFeedbackOn": true
+  "extraDimOn": false,
+  "nightLightOn": false,
+  "hapticFeedbackOn": true,
+  "enter": {
+    "tasksToRun": [
+      {
+        "name": "ChangeDisplayTimeout",
+        "priority": 1,
+        "param1": "update",
+        "param2": ""
+      }
+    ]
+  }
 }
 ```
+*Note: the `ChangeDisplayTimeout` task that is called just updates a custom quick settings tile that I have for quickly changing the display timeout.*
 
 I have another primary context named `car` that is activated when I'm connected to my car's Bluetooth stereo. When this context is activated I run a task named `CarMode` that creates a notification so I can easily launch Android Auto, Google Music, Pocket Casts, or Maps. I run the same task, with a different parameter, on exit to dismiss the notification. `car.json` looks like this:
 
@@ -402,6 +428,8 @@ Most of my contexts are added when a profile becomes active and removed when the
 The framework just uses a single profile to handle context changes:
 
 **ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
+
+**ContextCleared** - does the same as `ContextChanged`, but is needed to detect when the `%Modes_Contexts` variable has an empty value.
 
 **Night-Example** - An example time-based context.
 

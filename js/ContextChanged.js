@@ -62,14 +62,14 @@ secondaryContexts.forEach(context => {
 // DND first, if going from none/priority to all it must occur for media volume changes to occur (Android 12+)
 if (existsIsType(merged, 'dnd', 'string')) performTask('DoNotDisturb', 10, merged.dnd, '');
 
-// Only change media volume if %modes_mediaoverride != 1
+// Only change media volume if %Modes_MediaOverride != 1
 const mediaVolExists = existsIsType(merged, 'volume_media', 'int');
 if (existsIsType(merged, 'volume_media_override', 'boolean') && merged.volume_media_override) {
-  if (mediaVolExists && local('modes_mediaoverride') !== '1') mediaVol(merged.volume_media, false, false);
+  if (mediaVolExists && global('Modes_MediaOverride') !== '1') mediaVol(merged.volume_media, false, false);
   enableProfile('ModesMediaOverride', true);
 } else {
   enableProfile('ModesMediaOverride', false);
-  setLocal('modes_mediaoverride', '0');
+  setGlobal('Modes_MediaOverride', '0');
   if (mediaVolExists) mediaVol(merged.volume_media, false, false);
 }
 
@@ -82,12 +82,15 @@ if (existsIsType(merged, 'airplaneModeOn', 'boolean')) setAirplaneMode(merged.ai
 if (existsIsType(merged, 'screenRotationOn', 'boolean')) performTask('DisplayRotate', 10, merged.screenRotationOn, '');
 if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
 if (existsIsType(merged, 'displayBrightness', 'int') || existsIsType(merged, 'displayBrightness', 'string')) performTask('DisplayBrightness', 10, merged.displayBrightness, '');
+if (existsIsType(merged, 'nightLightOn', 'boolean')) performTask('NightLight', 10, merged.nightLightOn, '');
 if (existsIsType(merged, 'extraDimOn', 'boolean')) performTask('ExtraDim', 10, merged.extraDimOn, '');
 if (existsIsType(merged, 'immersiveMode', 'string')) performTask('ImmersiveMode', 10, merged.immersiveMode, '');
 if (existsIsType(merged, 'darkMode', 'boolean')) performTask('DarkMode', 10, merged.darkMode, '');
 if (existsIsType(merged, 'grayscaleMode', 'boolean')) performTask('GrayscaleMode', 10, merged.grayscaleMode, '');
 if (existsIsType(merged, 'hapticFeedbackOn', 'boolean')) performTask('TouchVibrations', 10, merged.hapticFeedbackOn, '');
 if (existsIsType(merged, 'batterySaverOn', 'boolean')) performTask('BatterySaver', 10, merged.batterySaverOn, '');
+if (existsIsType(merged, 'owntracksMode', 'int')) performTask("OwntracksMode", 10, merged.owntracksMode, '');
+if (existsIsType(merged, 'owntracksMode', 'string')) performTask("OwntracksMode", 10, owntracksStringToInt(merged.owntracksMode), '');
 
 // Perform enter parameters for new contexts
 ALL_CONFIGS
@@ -106,8 +109,8 @@ ALL_CONFIGS
     }
   });
 
-flash((newContexts.length > 0 ? 'New context(s): ' + newContexts.join(', ') : 'Active Context(s): ' + activeContexts.join(', ')));
 setGlobal('Modes_ActiveContexts', activeContexts.join(','));
+setLocal('active', activeContexts.join(', ') || DEFAULT_CONTEXT);
 
 exit();
 
@@ -133,4 +136,17 @@ function changeProfileStatus(name, on) {
 function executeTask(name, priority, param1, param2) {
   performTask(name, priority, param1, param2);
   wait(500);
+}
+
+function owntracksStringToInt(mode) {
+  switch (mode.toLowerCase()) {
+  case 'quiet':
+    return -1;
+  case 'manual':
+    return 0;
+  case 'move':
+    return 2;
+  default:
+    return 1;
+  }
 }

@@ -13,6 +13,7 @@
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
+  "nightLightOn": "null or boolean",
   "extraDimOn": "null or boolean",
   "grayscaleMode": "null or boolean",
   "immersiveMode": "null, off (immersive mode off), status (hide status bar), navigation (hide navigation bar), both (hide both)",
