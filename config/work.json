@@ -8,6 +8,7 @@
   "screenRotationOn": false,
   "displayTimeout": 1,
   "displayBrightness": "auto",
+  "extraDimOn": false,
   "hapticFeedbackOn": true,
   "enter": {
     "profilesToEnable": ["Work App Hider"]

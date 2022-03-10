@@ -1,10 +1,10 @@
 One of the frequent uses of Tasker is to change system settings and perform tasks based on your current situation.
 Things like silencing your phone while in a meeting, turning down brightness at night, or launching a music app
 when in the car are just the tip of the iceberg when it comes to Tasker automation. This sort of automation can
-be approached in many different ways and often times leads to repeated steps in multiple tasks and disorganization.
+be approached in many different ways and often leads to repeating the same steps in multiple tasks and disorganized complexity.
 
-Over time I have strived to refine my situation-based automation so that it's easy to modify, highly organized, and
-doesn't use the same steps in multiple tasks. I have now also made it universal so that anyone can import my simple
+Over time I have strived to refine my context-based automations so that they're easy to modify, highly organized, and
+don't use the same steps in multiple tasks. I have now also made it universal so that anyone can import my simple
 profiles and quickly get automating.
 
 See the technical details below and the examples from my own setup to help paint the full picture of how this framework can be beneficial to you.
@@ -20,30 +20,7 @@ To activate a context, simply call the `AddToContext` task with the name of the 
 
 If multiple contexts are active, the framework does a few things to determine how the device settings should be set. Only the highest priority `primary` context (see the [configuration spec](#configuration-spec) section for a description of `primary` vs `secondary` contexts) will be used. If there is a tie for highest priority, then the last to be activated will be used. All `secondary` contexts with a priority higher than the primary context will be used, and settings from higher priority contexts will take precidence over lower priority contexts if they change the same setting. Also, any `secondary` context's settings will take precidence over `primary` context's settings even if they share the same priority.
 
-**Supported Settings**  
-Out of the box the following settings changes are supported:
-
-* Notification Volume
-* Media Volume
-* Do Not Disturb Mode
-* Location Mode+
-* Wifi on/off
-* Bluetooth on/off
-* Mobile Data on/off+
-* Airplane Mode on/off
-* Display Rotation on/off
-* Display Timeout
-* Display Brightness
-* Immersive Mode
-* Dark Mode
-* Haptic Feedback on/off+
-* Battery Saver on/off+
-* And much more\*
-
-\+ *Requires you to grant Tasker the `WRITE_SECURE_SETTINGS` permission. Instructions [here](https://tasker.joaoapps.com/userguide/en/help/ah_secure_setting_grant.html)*  
-\* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
-
-# Framework Advantages Over Standard Tasker Profiles
+**Framework Advantages Over Standard Tasker Profiles**  
 1. Profile conflict management
     
     With standard profiles if you want to avoid a profile being active while another is active you have to do some sort of check, like `%PACTIVE` regex matching the other profile name(s) or set a custom global variable with a value when the other profile is active and add that as a condition to your profile. With this framework you don't need those checks because the `type` and `priority` properties handle that for you, so you can create profiles with a simple, single condition and let the framework handle the rest.
@@ -56,6 +33,32 @@ Out of the box the following settings changes are supported:
 
     When you use normal profiles and tasks to change settings dependent on your situation, you either have to create one giant task with a lot of `if` statements in it, or each profile has a task with a lot of the same steps repeated in them. With this framework you can change a bunch of settings without creating any extra tasks and all the logic is written in JavaScript which is a lot easier to work with than Tasker's.
 
+**Supported Settings**  
+Out of the box the following settings changes are supported:
+
+* Notification Volume
+* Media Volume
+* Do Not Disturb Mode
+* Location Mode+
+* Wifi on/off^
+* Bluetooth on/off
+* Mobile Data on/off+
+* Airplane Mode on/off
+* Display Rotation on/off
+* Display Timeout
+* Display Brightness
+* Immersive Mode
+* Dark Mode
+* Night Light+ (May only work on Pixels)
+* Extra Dim Screen+ (Added in Android 12)
+* Grayscale Mode+
+* Haptic Feedback on/off+
+* Battery Saver on/off+
+* And much more\*
+
+\^ *Requires the [TaskerSettings](https://github.com/joaomgcd/TaskerSettings) helper application*  
+\+ *Requires you to grant Tasker the `WRITE_SECURE_SETTINGS` permission. Instructions [here](https://tasker.joaoapps.com/userguide/en/help/ah_secure_setting_grant.html)*  
+\* *With the ability to call any task or enable/disable any profile, you can modify anything else that Tasker is able to modify.*
 
 # Installation and Configuration
 
@@ -69,15 +72,15 @@ Out of the box the following settings changes are supported:
     If installing from Taskernet you will be prompted to run the Setup task, otherwise select the Tasks tab for the Modes project in Tasker and open the Setup task. Select the play button and follow the on-screen prompts. It will ask you for the location you store your config files, a default context when no other primary contexts are active, and if you'd like to periodically check for updates. *Note: the Create Directory step will error if the directory already exists, but it's set to continue after error so it's fine.*
 
 1. ### Create config files
-    As of version `1.2.0` there is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage so you don't need to bookmark the URL. You can also see the [Configuration Spec](#configuration-spec) section for manual config creation. As of version `1.6.0` all configuration details are stored in memory so if you make changes to your configuration files make sure to run the `ReadConfigFiles` task to re-read the configuration files into memory.
+    There is a [Configuration Creator webpage](https://rawgit.com/jhotmann/tasker-phone-modes/master/ConfigCreator/ConfigCreator.html) that you can use to generate a json file and download to your device. There is also a `ConfigCreator` task that can be used to launch the configuration creator webpage so you don't need to bookmark the URL. You can also see the [Configuration Spec](#configuration-spec) section for manual config creation. As of version `1.6.0` all configuration details are stored in memory so if you make changes to your configuration files make sure to run the `ReadConfigFiles` task to re-read the configuration files into memory.
 
 1. ### Create profiles and tasks to change the current context
 
-    Create profiles and tasks *outside of the `Modes` project (so they don't get overwritten)* that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is activated, `home.json` is used to lookup the settings for the `home` context. You can activate/deactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
+    Create profiles and tasks **outside of the `Modes` project (so they don't get overwritten)** that determine when context changes have occurred. The name of your config files are important because they need to match a context's name. When the `home` context is activated, `home.json` is used to lookup the settings for the `home` context. You can activate/deactivate contexts within a task or with a profile. I personally use profiles to handle the majority of context changes but tasks can be used as well.
 
     To activate a context, simply call the `AddToContext` task with the name of the context as the first parameter, and to deactivate a context call the `RemoveFromContext` task with the name of the context as the first parameter.
 
-    There are some cases where you may not want to add another occurance of a context to the context list. For example, if you have a profile that activates the `night` context from 11pm until 6am, but you also have a NFC tag next to your bed that can activate the `night` context. If you use the NFC tag to add `night` to your context list a second instance will be added when the time profile activates. You can prevent this by adding `if-not-exist` as the second parameter of `AddToContext`. Similarly, you can use `max-count=X` as the second parameter to limit the occurances of a context in the list to the supplied number. You can also supply the second parameter `all` to `RemoveFromContext` to remove all occurances of a context from the context list.
+    There are some cases where you may not want to add more than one occurance of a context to the context list. For example, if you have a profile that activates a `night` context from 11pm until 6am, but you also have a NFC tag next to your bed that can activate the `night` context. If you use the NFC tag to add `night` to your context list a second instance will be added when the time profile activates. You can prevent this by adding `if-not-exist` as the second parameter of `AddToContext`. Similarly, you can use `max-count=X` as the second parameter to limit the occurances of a context in the list to the supplied number. You can also supply the second parameter `all` to `RemoveFromContext` to remove all occurances of a context from the context list.
 
     *See the [Examples](#examples) section for my real world configuration files and profiles.*
 
@@ -130,6 +133,12 @@ The configuration files each contain a single JSON object with the following pro
 * `displayBrightness` - change the display brightness
   * An integer from `0` to `255`
   * `"auto"` will restore auto brightness
+- `nightLightOn` - turns Night Light (blue light filter) on or off
+  - `true` - turns Night Light on
+  - `false` - turns Night Light off
+- `extraDimOn` - turns Extra Dim mode on or off
+  - `true` - turns Extra Dim on
+  - `false` - turns Extra Dim off
 * `immersiveMode` - hide/unhide the status bar, navigation bar, or both
   * `"off"` - immersive mode off
   * `"status"` - hide the status bar
@@ -138,6 +147,9 @@ The configuration files each contain a single JSON object with the following pro
 - `darkMode` - turns system dark theme on or off (Android 10+ on Tasker-supported devices)
   - `true` - dark mode on
   - `false` - dark mode off
+- `grayscaleMode` - turns grayscale mode on or off
+  - `true` - grayscale mode
+  - `false` - full color mode
 * `hapticFeedbackOn` - turns haptic feedback on or off
   * `true` - turns haptic feedback on
   * `false` - turns haptic feedback off
@@ -179,6 +191,9 @@ If you'd like to create configuration files manually instead of using the [Confi
   "screenRotationOn": "null or boolean",
   "displayTimeout": "null or integer (1+, display timeout in minutes)",
   "displayBrightness": "null, auto, integer (0-255)",
+  "nightLightOn": "null or boolean",
+  "extraDimOn": "null or boolean",
+  "grayscaleMode": "null or boolean",
   "immersiveMode": "null, off (immersive mode off), status (hide status bar), navigation (hide navigation bar), both (hide both)",
   "darkMode": "null or boolean",
   "hapticFeedbackOn": "null or boolean",
@@ -229,9 +244,22 @@ I have a primary context named `home` that is activated when I'm connected to my
   "screenRotationOn": false,
   "displayTimeout": 1,
   "displayBrightness": "auto",
-  "hapticFeedbackOn": true
+  "extraDimOn": false,
+  "nightLightOn": false,
+  "hapticFeedbackOn": true,
+  "enter": {
+    "tasksToRun": [
+      {
+        "name": "ChangeDisplayTimeout",
+        "priority": 1,
+        "param1": "update",
+        "param2": ""
+      }
+    ]
+  }
 }
 ```
+*Note: the `ChangeDisplayTimeout` task that is called just updates a custom quick settings tile that I have for quickly changing the display timeout.*
 
 I have another primary context named `car` that is activated when I'm connected to my car's Bluetooth stereo. When this context is activated I run a task named `CarMode` that creates a notification so I can easily launch Android Auto, Google Music, Pocket Casts, or Maps. I run the same task, with a different parameter, on exit to dismiss the notification. `car.json` looks like this:
 
@@ -400,6 +428,8 @@ Most of my contexts are added when a profile becomes active and removed when the
 The framework just uses a single profile to handle context changes:
 
 **ContextChanged** - monitors the `%Modes_Contexts` variable for changes. When `%Modes_Contexts` is changed (i.e. 'home' is added), the `ContextChanged` task is called.
+
+**ContextCleared** - does the same as `ContextChanged`, but is needed to detect when the `%Modes_Contexts` variable has an empty value.
 
 **Night-Example** - An example time-based context.
 

@@ -125,6 +125,62 @@
                     <input type="text" autocapitalize="none" class="form-control" name="brightnessInput" id="brightnessInput" placeholder="Enter auto or a number 0 to 255" disabled>
                   </p>
                   <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="extraDimCheck1" id="extraDimCheck1">
+                    <label class="form-check-label" for="extraDimCheck1">Turn extra dim on/off</label>
+                    <fieldset id="extraDimFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="extraDimRadio" id="extraDimRadio1" value="true" checked>
+                        <label class="form-check-label" for="extraDimRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="extraDimRadio" id="extraDimRadio2" value="false">
+                        <label class="form-check-label" for="extraDimRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="nightLightCheck1" id="nightLightCheck1">
+                    <label class="form-check-label" for="nightLightCheck1">Turn Night Light on/off (Pixel Only)</label>
+                    <fieldset id="nightLightFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="nightLightRadio" id="nightLightRadio1" value="true" checked>
+                        <label class="form-check-label" for="nightLightRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="nightLightRadio" id="nightLightRadio2" value="false">
+                        <label class="form-check-label" for="nightLightRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="darkModeCheck1" id="darkModeCheck1">
+                    <label class="form-check-label" for="darkModeCheck1">Turn dark mode on/off</label>
+                    <fieldset id="darkModeFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio1" value="true" checked>
+                        <label class="form-check-label" for="darkModeRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio2" value="false">
+                        <label class="form-check-label" for="darkModeRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="grayscaleModeCheck1" id="grayscaleModeCheck1">
+                    <label class="form-check-label" for="grayscaleModeCheck1">Turn grayscale mode on/off</label>
+                    <fieldset id="grayscaleModeFieldset" style="padding-left:30px;" disabled>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="grayscaleModeRadio" id="grayscaleModeRadio1" value="true" checked>
+                        <label class="form-check-label" for="grayscaleModeRadio1">On</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="grayscaleModeRadio" id="grayscaleModeRadio2" value="false">
+                        <label class="form-check-label" for="grayscaleModeRadio2">Off</label>
+                      </div>
+                    </fieldset>
+                  </p>
+                  <p class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="immersiveCheck1" id="immersiveCheck1">
                     <label class="form-check-label" for="immersiveCheck1">Change immersive mode</label>
                     <fieldset id="immersiveFieldset" disabled>
@@ -143,20 +199,6 @@
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="immersiveRadios" id="immersiveRadios4" value="both">
                         <label class="form-check-label" for="immersiveRadios4">Full immersive mode</label>
-                      </div>
-                    </fieldset>
-                  </p>
-                  <p class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="darkModeCheck1" id="darkModeCheck1">
-                    <label class="form-check-label" for="darkModeCheck1">Turn dark mode on/off</label>
-                    <fieldset id="darkModeFieldset" style="padding-left:30px;" disabled>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio1" value="true" checked>
-                        <label class="form-check-label" for="darkModeRadio1">On</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="darkModeRadio" id="darkModeRadio2" value="false">
-                        <label class="form-check-label" for="darkModeRadio2">Off</label>
                       </div>
                     </fieldset>
                   </p>
@@ -498,6 +540,20 @@
           $("#brightnessInput").prop("disabled", true);
         }
       });
+      $("#extraDimCheck1").change(function() {
+        if (this.checked) {
+          $("#extraDimFieldset").prop("disabled", false);
+        } else {
+          $("#extraDimFieldset").prop("disabled", true);
+        }
+      });
+      $("#nightLightCheck1").change(function() {
+        if (this.checked) {
+          $("#nightLightFieldset").prop("disabled", false);
+        } else {
+          $("#nightLightFieldset").prop("disabled", true);
+        }
+      });
       $("#immersiveCheck1").change(function() {
         if(this.checked) {
           $("#immersiveFieldset").prop("disabled", false);
@@ -510,6 +566,13 @@
           $("#darkModeFieldset").prop("disabled", false);
         } else {
           $("#darkModeFieldset").prop("disabled", true);
+        }
+      });
+      $("#grayscaleModeCheck1").change(function() {
+        if(this.checked) {
+          $("#grayscaleModeFieldset").prop("disabled", false);
+        } else {
+          $("#grayscaleModeFieldset").prop("disabled", true);
         }
       });
       $("#hapticCheck1").change(function() {
@@ -606,6 +669,12 @@
         if (timeoutObj !== undefined && Number.isInteger(parseInt(timeoutObj.value))) configObj.displayTimeout = parseInt(timeoutObj.value);
         let brightnessObj = formObj.find(o => { return (o.name === "brightnessInput"); });
         if (brightnessObj !== undefined && Number.isInteger(parseInt(brightnessObj.value))) configObj.displayBrightness = parseInt(brightnessObj.value);
+        let nightLightObj = formObj.find(o => { return (o.name === "nightLightRadio"); });
+        if (nightLightObj !== undefined) configObj.nightLightOn = (nightLightObj.value === "true" ? true : false);
+        let extraDimObj = formObj.find(o => { return (o.name === "extraDimRadio"); });
+        if (extraDimObj !== undefined) configObj.extraDimOn = (extraDimObj.value === "true" ? true : false);
+        let grayscaleModeObj = formObj.find(o => { return (o.name === "grayscaleModeRadio"); });
+        if (grayscaleModeObj !== undefined) configObj.grayscaleMode = (grayscaleModeObj.value === "true" ? true : false);
         let immersiveObj = formObj.find(o => { return (o.name === "immersiveRadios"); });
         if (immersiveObj !== undefined) configObj.immersiveMode = immersiveObj.value;
         let darkModeObj = formObj.find(o => { return (o.name === "darkModeRadio"); });
